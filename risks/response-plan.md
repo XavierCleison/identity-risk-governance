@@ -1,479 +1,309 @@
-# 📋 Plano de Resposta de Riscos - Segundo PMBOK
+﻿# 🎯 Plano de Resposta aos Riscos - Identity Risk Governance
 
-[![Framework](https://img.shields.io/badge/framework-PMBOK%206th%20Edition-blue.svg)]()
-[![Process](https://img.shields.io/badge/process-Plan%20Risk%20Responses-green.svg)]()
-
-## 📚 Referência PMBOK
-
-Segundo o **PMBOK 6ª Edição**, o processo "Plan Risk Responses" (11.5) define quatro estratégias principais para ameaças:
-
-1. **EVITAR** - Eliminar a ameaça ou condição
-2. **MITIGAR** - Reduzir probabilidade ou impacto
-3. **TRANSFERIR** - Passar a responsabilidade para terceiros
-4. **ACEITAR** - Reconhecer o risco sem ação proativa
+**Baseado em:** PMBOK (Project Management Body of Knowledge)  
+**Data:** 2026-07-21  
+**Status:** Active
 
 ---
 
-## 🎯 Estratégias de Resposta
+## 1. Estratégias de Resposta (PMBOK)
 
-### 1. EVITAR (Avoid)
+### 1.1 EVITAR (Avoid)
+**Objetivo:** Eliminar a probabilidade do risco ocorrer
 
-**Definição PMBOK**: Alterar o escopo, cronograma, orçamento ou abordagem do projeto para eliminar completamente a ameaça ou a condição que a causa.
-
-#### Critérios de Aplicação
-
-✅ **Quando usar**:
-- Risco tem impacto crítico e probabilidade média/alta
+**Quando usar:**
+- Risco tem probabilidade muito alta
+- Impacto potencial é catastrófico
 - Existem alternativas viáveis
-- Custo de evitar < Impacto potencial
-- Não compromete objetivos principais
 
-❌ **Quando NÃO usar**:
-- Impossível eliminar completamente
-- Custo proibitivo
-- Impacto na funcionalidade crítica
-- Prazo insuficiente
-
-#### Exemplos Práticos em IAM
-
-```
-RISK-003: Contas Órfãs em Sistemas Críticos
-
-Ameaça: Contas sem proprietário = acesso não autorizado
-
-Estratégia EVITAR:
-├─ Implementar Automated Lifecycle Management
-│  └─ Desabilitar automaticamente contas após término
-├─ Eliminar contas órfãs existentes (47 contas)
-│  └─ Deprovisioning imediato
-└─ Política de "zero-orphan" obrigatória
-   └─ Nenhuma conta sem owner designado
-
-Resultado:
-├─ Elimina 100% do risco
-├─ Custo: R$ 45,000 (uma vez)
-└─ ROI: R$ 500K (incidentes evitados)
-```
-
-### 2. MITIGAR (Mitigate)
-
-**Definição PMBOK**: Reduzir a probabilidade de ocorrência, o impacto da ameaça, ou ambos, para um nível aceitável.
-
-#### Critérios de Aplicação
-
-✅ **Quando usar**:
-- Risco não pode ser evitado completamente
-- Existem controles viáveis
-- ROI é positivo
-- Timeline permite implementação
-
-#### Exemplos Práticos em IAM
-
-```
-RISK-001: Violação de Segregação de Deveres (SoD)
-
-Ameaça: Combinações de permissões conflitantes → fraude
-
-Estratégia MITIGAR:
-
-Reduzir PROBABILIDADE:
-├─ 1. Enforce SoD policies automaticamente
-│  └─ Regex validation em atribuição de permissões
-├─ 2. Access review trimestral obrigatória
-│  └─ Validação manual de exceptions
-└─ 3. IA monitoring contínua
-   └─ Alertas de violações potenciais em tempo real
-
-Reduzir IMPACTO:
-├─ 1. Segregação de sistemas críticos
-│  └─ Audit teams isoladas de transaction teams
-├─ 2. Approval workflow para exceções
-│  └─ Necessário CIO approval
-└─ 3. Auditoria intensiva de usuários com exceções
-   └─ Mensal ao invés de trimestral
-
-Resultado:
-├─ Probabilidade: ALTA (0.75) → MÉDIA (0.40)
-├─ Impacto: CRÍTICO (0.95) → ALTO (0.70)
-├─ Score: 0.62 → 0.28 (↓ 55%)
-└─ Custo: R$ 120,000 + R$ 50,000/ano (operacional)
-```
-
-#### Matriz de Mitigation Techniques
-
-| Técnica | Probabilidade | Impacto | Custo | Prazo |
-|---------|---|---|---|---|
-| Controle técnico automático | ↓↓ | - | M | 30d |
-| Policy & Enforcement | ↓ | ↓ | L | 45d |
-| Training & Awareness | ↓ | - | L | 60d |
-| Redundância/Failover | - | ↓↓ | H | 90d |
-| Insurance | - | ↓ | M | 15d |
-| Monitoring & Alerting | ↓ | ↓ | M | 30d |
-
-### 3. TRANSFERIR (Transfer)
-
-**Definição PMBOK**: Delegação a terceiros (ex: seguradoras, fornecedores) da responsabilidade financeira ou operacional.
-
-#### Critérios de Aplicação
-
-✅ **Quando usar**:
-- Organização carece de expertise
-- Custo é preocupação principal
-- Terceiro pode gerenciar melhor
-- Relacionamento estabelecido
-
-#### Exemplos Práticos em IAM
-
-```
-RISK-004: Identity Provider Indisponível
-
-Ameaça: IdP down → 8000+ usuários sem acesso
-
-Estratégia TRANSFERIR:
-
-1. Contratar SLA Premium com Okta
-   ├─ 99.99% uptime guarantee
-   ├─ Backup region automaticamente
-   ├─ RTO: 5 minutos
-   ├─ RPO: < 1 minuto
-   └─ Custo: R$ 150,000/ano
-
-2. Contrato de Disaster Recovery
-   ├─ Failover automático para backup IdP
-   ├─ Okta + Azure AD redundancy
-   └─ Custo: R$ 80,000/ano
-
-3. Insurance - Cyber Liability
-   ├─ Cobertura de business interruption
-   ├─ Coverage: R$ 10M
-   └─ Custo: R$ 120,000/ano
-
-4. Managed Service Provider (MSP)
-   ├─ 24/7 monitoring & support
-   ├─ SLA response time: 15 min críticos
-   └─ Custo: R$ 200,000/ano
-
-Total Risk Transfer:
-├─ Probabilidade: BAIXA (0.15) → MUITO BAIXA (0.05)
-├─ Impacto: Parcialmente absorvido por insurance
-└─ Custo anual: R$ 550,000 (vs R$ 500K/hour downtime)
-```
-
-#### Instrumentos de Transferência
-
-| Instrumento | Aplicação | Custo |
-|-----------|-----------|-------|
-| **Service Level Agreement (SLA)** | IdP uptime, Response time | Included |
-| **Insurance Policy** | Business interruption, Cyber liability | 2-3% premium |
-| **Vendor Guarantees** | Performance warranties | Included |
-| **Outsourcing/MSP** | 24/7 management, Expertise | 5-10% overhead |
-
-### 4. ACEITAR (Accept)
-
-**Definição PMBOK**: Reconhecer o risco e planejar contingências caso ocorra, sem reduzir proativamente a probabilidade ou impacto.
-
-#### Critérios de Aplicação
-
-✅ **Quando usar**:
-- Risco é residual após mitigação
-- Impacto aceitável para organização
-- Custo de resposta > Impacto potencial
-- Probabilidade muito baixa
-
-#### Exemplos Práticos em IAM
-
-```
-RISK-020: Falta de Documentação de Políticas
-
-Ameaça: Políticas não documentadas → Falta de compliance
-
-Status: ACEITAR
-├─ Probabilidade: BAIXA (0.20)
-├─ Impacto: BAIXO (0.45)
-├─ Score: 0.09
-└─ Mitigação: Informação armazenada em Wikis/Confluence
-
-Contingência:
-├─ Se policy gap detectado → 30-day remediation
-├─ Owner: Compliance Officer
-└─ Monitoring: Quarterly audits
-
-Custo: R$ 0 (não proativo)
-Risk Budget: Monitoramento apenas
-```
-
-```
-RISK-024: Falta de Training de Segurança
-
-Ameaça: Equipe não treinada → Erros de segurança
-
-Status: ACEITAR (Monitorar)
-├─ Probabilidade: BAIXA (0.40)
-├─ Impacto: MÉDIO (0.60)
-├─ Score: 0.24
-└─ Racional: Training planejado para Q4
-
-Contingência:
-├─ Se incidente relacionado à falta de training
-├─ Então: Immediate remedial training + refresher
-├─ Owner: CISO/HR
-└─ Timeline: < 48 horas
-
-Custo: R$ 0 (já planejado em orçamento)
-```
+**Exemplo - RISK-008 (IdP Downtime):**
+- Implementar redundância de IdP
+- Garantir 99.95% de disponibilidade
+- Resultado: Probabilidade reduzida de 30% para 5%
 
 ---
 
-## 🔄 Matriz de Decisão PMBOK
+### 1.2 MITIGAR (Mitigate)
+**Objetivo:** Reduzir probabilidade e/ou impacto do risco
 
-```
-                    PROBABILIDADE
-           BAIXA              MÉDIA              ALTA
-CRÍTICO  ┌──────────────┬──────────────┬──────────────┐
-IMPACTO  │  TRANSFERIR  │   EVITAR     │    EVITAR    │
-0.95     │   + MITIGAR  │   ou MITIGAR │   Urgente    │
-         ├──────────────┼──────────────┼──────────────┤
-ALTO     │   ACEITAR    │   MITIGAR    │   MITIGAR    │
-IMPACTO  │   ou MONIT.  │   Urgente    │   Urgente    │
-0.80     ├──────────────┼──────────────┼──────────────┤
-MÉDIO    │   ACEITAR    │   ACEITAR    │   MITIGAR    │
-IMPACTO  │              │   ou MITIGAR │              │
-0.60     ├──────────────┼──────────────┼──────────────┤
-BAIXO    │   ACEITAR    │   ACEITAR    │   ACEITAR    │
-IMPACTO  │              │              │   ou MONIT.  │
-0.45     └──────────────┴──────────────┴──────────────┘
-```
+**Quando usar:**
+- Risco é significativo mas gerenciável
+- Ações de redução são viáveis
+- Custo-benefício é favorable
+
+**Exemplo - RISK-001 (Privilege Creep):**
+- Implementar periodic access reviews (quarterly)
+- Automate revocation de permissions não-utilizadas
+- Real-time privilege monitoring
+- Resultado: Probabilidade reduzida de 80% para 40%
 
 ---
 
-## 📋 Planos de Resposta Detalhados
+### 1.3 TRANSFERIR (Transfer)
+**Objetivo:** Passar a responsabilidade do risco para terceiro
 
-### Risk-001: SoD Violation
+**Quando usar:**
+- Risco pode ser controlado por especialista externo
+- Insurance ou vendor pode gerenciar melhor
+- Custo de transferência é menor que impacto
 
-```yaml
-Risk ID: R-001
-Strategy: MITIGAR
-Rationale PMBOK: 
-  "Risco crítico com probabilidade média pode ser significativamente
-   reduzido através de controles técnicos e policies. Evitar completamente
-   não é viável em contexto corporativo."
-
-Action Plan:
-  Phase 1 - Detection (0-30 days):
-    - Scan de 8000 usuários vs matriz SoD
-    - Identificar 100% de violações
-    - Owner: GRC Manager
-    - Effort: 160h
-  
-  Phase 2 - Remediation (30-60 days):
-    - Remover violações identificadas
-    - Criar roles balanceados
-    - Approval workflow para exceções
-    - Owner: IAM + GRC Teams
-    - Effort: 240h
-  
-  Phase 3 - Enforcement (60-90 days):
-    - Implementar regras no sistema
-    - Alertas em tempo real
-    - Auditoria automática semanal
-    - Owner: Security Ops
-    - Effort: 80h
-
-Success Criteria:
-  - 100% compliance com SoD
-  - Zero novos incidentes
-  - Audit validate approve
-  - MTTD < 1 minuto
-
-Budget: R$ 120,000
-Timeline: 90 dias
-Owner: GRC Manager
-```
-
-### Risk-004: IdP Unavailability
-
-```yaml
-Risk ID: R-004
-Strategy: TRANSFERIR + MITIGAR
-Rationale PMBOK:
-  "Risco raro (15% prob) mas impacto crítico. Melhor estratégia é
-   transferir para fornecedor confiável com SLA garantido, mantendo
-   failover automático para redundância."
-
-Action Plan:
-  1. SLA Premium com Okta (99.99% uptime)
-     - Dual-region active-active
-     - Auto-failover < 5 min
-     - Cost: R$ 150K/year
-  
-  2. Backup IdP (Azure AD)
-     - Cache tokens locais (emergency)
-     - Test failover monthly
-     - Cost: R$ 80K/year
-  
-  3. Insurance - Business Interruption
-     - Coverage R$ 10M
-     - Cyber liability included
-     - Cost: R$ 120K/year
-  
-  4. MSP 24/7 Monitoring
-     - Response SLA 15 min critical
-     - Cost: R$ 200K/year
-
-Contingency Trigger:
-  IF IdP responsiveness > 1 second for 5 min
-  THEN trigger failover process
-  AND notify on-call team
-
-Total Cost Transfer: R$ 550K/year
-ROI: vs R$ 500K/hour potential downtime
-
-Timeline: 90 dias
-Owner: Infrastructure Manager
-```
+**Exemplo - RISK-016 (IdP Dependency):**
+- Contratar SLA da Azure AD/Okta com 99.99% uptime
+- Vendor responsável por conformidade LGPD/GDPR
+- Seguro de cyber liability para breach
+- Resultado: Responsabilidade transferida, impacto mitigado
 
 ---
 
-## 🎯 Mapeamento de Riscos para Estratégias
+### 1.4 ACEITAR (Accept)
+**Objetivo:** Reconhecer o risco e estar preparado
 
-| Risk | Estratégia | Prioridade | Timeline | Custo |
-|------|-----------|-----------|----------|-------|
-| R-001 | MITIGAR | 1 | 90d | R$ 120K |
-| R-002 | MITIGAR | 2 | 60d | R$ 85K |
-| R-003 | EVITAR | 3 | 30d | R$ 45K |
-| R-004 | TRANSFERIR | 4 | 90d | R$ 550K/year |
-| R-005 | MITIGAR | 5 | 45d | R$ 80K |
-| R-006 | MITIGAR | 6 | 30d | R$ 15K |
-| R-007 | MITIGAR | 7 | 60d | R$ 40K |
-| R-008 | MITIGAR | 8 | 45d | R$ 60K |
-| R-009 | MITIGAR | 9 | 60d | R$ 70K |
-| R-010 | MITIGAR | 10 | 30d | R$ 25K |
-| R-011 | MITIGAR | 11 | 45d | R$ 50K |
-| R-012 | MITIGAR | 12 | 45d | R$ 35K |
-| R-013 | MITIGAR | 13 | 60d | R$ 30K |
-| R-014 | MITIGAR | 14 | 90d | R$ 40K |
-| R-015 | MITIGAR | 15 | 60d | R$ 35K |
-| R-016 | MITIGAR | 16 | 45d | R$ 50K |
-| R-017 | MITIGAR | 17 | 60d | R$ 45K |
-| R-018 | TRANSFERIR | 18 | 90d | R$ 200K |
-| R-019 | MITIGAR | 19 | 60d | R$ 30K |
-| R-020 | ACEITAR | 20 | N/A | R$ 0 |
-| R-021 | ACEITAR | 21 | N/A | R$ 0 |
-| R-022 | MITIGAR | 22 | 45d | R$ 35K |
-| R-023 | ACEITAR | 23 | N/A | R$ 0 |
+**Quando usar:**
+- Risco tem baixa probabilidade
+- Impacto é aceitável
+- Custo de mitigação > impacto potencial
+
+**Exemplo - RISK-020 (Audit Log Break):**
+- Probabilidade: 25%
+- Impacto: Baixo (3/10)
+- Ação: Monitorar com alertas
+- Plano: Response imediata se ocorrer
+- Resultado: Aceito e monitorado
 
 ---
 
-## 📊 Orçamento de Resposta
+## 2. Plano de Resposta por Risco
 
-### Por Estratégia
+### RISK-001: Privilege Creep
+**Estratégia:** MITIGAR
 
-```
-EVITAR:        R$ 45,000 (1 risco)
-MITIGAR:       R$ 870,000 (18 riscos)
-TRANSFERIR:    R$ 750,000/year (2 riscos)
-ACEITAR:       R$ 0 (2 riscos)
-─────────────────────────
-TOTAL CAPEX:   R$ 1,665,000
-TOTAL OPEX:    R$ 750,000/year
-```
+**Ações:**
+1. Week 1-2: Implementar periodic access reviews
+   - Quarterly reviews obrigatórias
+   - Managers aprovam/rejeitam acessos
+2. Week 2-3: Automação de revogação
+   - Revogar permissões não-utilizadas > 90 dias
+   - Alert para managers
+3. Week 3-4: Real-time monitoring
+   - Dashboard de privilege escalation
+   - Alert instantâneo
 
-### Benefícios Esperados
-
-```
-Incidentes Evitados:     R$ 5,000,000/year
-Multas Regulatórias:     R$ 2,000,000/year
-Downtime Evitado:        R$ 500,000/year
-Eficiência Operacional:  R$ 800,000/year
-─────────────────────────
-TOTAL BENEFÍCIO:         R$ 8,300,000/year
-
-ROI: (8,300,000 - 750,000) / 1,665,000 = 4.57x
-Payback Period: 2.4 meses
-```
+**Owner:** Identity Manager  
+**Timeline:** 30 dias  
+**Budget:** \  
+**Success Criteria:**
+- 0 privilege creep violations
+- 100% manager review compliance
+- < 7 dias para remediação
 
 ---
 
-## 🔄 Monitoramento de Resposta
+### RISK-002: Contas Órfãs
+**Estratégia:** MITIGAR
 
-### Indicadores de Efetividade (PMBOK)
+**Ações:**
+1. Week 1: HR Integration
+   - API connection com HR system
+   - Auto-detection de ex-funcionários
+2. Week 2-3: Disable automático
+   - Disable contas > 90 dias inativas
+   - Alert antes de disable
+3. Week 4: Cleanup process
+   - Quarterly manual review
+   - Cleanup de contas legacy
 
-```
-Para cada resposta implementada:
-
-1. Efetiveness Indicator
-   └─ Baseline → Target → Actual
-   
-2. Timeliness Indicator
-   └─ Planejado → Executado
-   
-3. Cost Indicator
-   └─ Orçado → Gasto
-   
-4. Quality Indicator
-   └─ Aprovação em audit
-```
-
-### Dashboard de Acompanhamento
-
-```
-R-001 (SoD) - MITIGAR
-├─ Phase 1 (Detection):     ████████░░ 80% | On time
-├─ Phase 2 (Remediation):   ░░░░░░░░░░  0% | Scheduled
-├─ Phase 3 (Enforcement):   ░░░░░░░░░░  0% | Scheduled
-└─ Overall:                 ██░░░░░░░░ 27% | On track
-
-R-004 (IdP) - TRANSFERIR
-├─ SLA Setup:               ██████████ 100% | Complete
-├─ MSP Contract:            ████░░░░░░  40% | In progress
-├─ Testing:                 ░░░░░░░░░░   0% | Q3
-└─ Overall:                 ████░░░░░░  47% | On schedule
-```
+**Owner:** HR & IT Lead  
+**Timeline:** 45 dias  
+**Success Criteria:**
+- 100% orphaned accounts identified
+- Auto-disable working
+- 0 inactive accounts
 
 ---
 
-## ✅ Critérios de Sucesso
+### RISK-003: SoD Violations
+**Estratégia:** MITIGAR
 
-### Por Estratégia
+**Ações:**
+1. Week 1-2: Map SoD rules
+   - Identificar conflitos críticos
+   - Define SoD matrix
+2. Week 2-4: Implement rules
+   - Programar automated enforcement
+   - Test em non-prod
+3. Week 4-6: Remediation
+   - Fix existing violations
+   - Manager approval
+4. Week 6+: Continuous monitoring
+   - Real-time validation
+   - Alert para violations
 
-**EVITAR**: 
-- ✅ Risco completamente eliminado
-- ✅ Zero incidentes relacionados
-- ✅ Validação em audit
-
-**MITIGAR**:
-- ✅ Probabilidade reduzida ≥ 50%
-- ✅ Impacto reduzido ≥ 30%
-- ✅ Score agregado ↓ ≥ 40%
-
-**TRANSFERIR**:
-- ✅ SLA assinado e ativo
-- ✅ Failover testado com sucesso
-- ✅ Insurance policy em vigor
-
-**ACEITAR**:
-- ✅ Contingency plan documentado
-- ✅ Monitoramento em funcionamento
-- ✅ Trigger events definidos
-
----
-
-## 📚 Referências PMBOK
-
-**Process**: Plan Risk Responses (11.5)  
-**Knowledge Area**: Project Risk Management  
-**Input**: Risk Register  
-**Output**: Risk Response Plan
-
-**Estratégias Adicionais (Oportunidades)**:
-- Explorar (Explore)
-- Melhorar (Enhance)
-- Compartilhar (Share)
-- Aceitar (Accept)
+**Owner:** Compliance Officer  
+**Timeline:** 60 dias  
+**Success Criteria:**
+- 100% SoD rules implemented
+- 0 violations in production
+- 100% compliance
 
 ---
 
-**Última Atualização**: Julho 21, 2026  
-**Aprovado por**: CIO / CISO / PMO  
-**Próxima Revisão**: Agosto 21, 2026
+### RISK-004: Shadow Identities
+**Estratégia:** MITIGAR
 
+**Actions:**
+1. Discovery & Inventory
+   - Scan systems para undocumented accounts
+   - Create inventory
+2. Centralize Management
+   - Provisioning governance
+   - Documentation requirement
+3. Monitoring
+   - Alert para new shadow accounts
+   - Quarterly audit
+
+**Owner:** Security Engineer  
+**Timeline:** 45 dias  
+
+---
+
+### RISK-005: Over-privileged Users
+**Estratégia:** MITIGAR
+
+**Actions:**
+1. Audit admin users
+2. Implement least privilege
+3. Use Just-In-Time (JIT) access
+4. MFA mandatory for admins
+
+**Owner:** IAM Architect  
+**Timeline:** 30 dias  
+
+---
+
+### RISK-006: Compromised Tokens
+**Estratégia:** MITIGAR
+
+**Actions:**
+1. Token rotation policy
+2. Monitor leaked credentials
+3. Force password reset
+4. Conditional access
+
+**Owner:** Security Operations  
+**Timeline:** 14 dias  
+
+---
+
+### RISK-007: MFA Disabled
+**Estratégia:** MITIGAR
+
+**Actions:**
+1. Make MFA mandatory
+2. Remove weak 2FA
+3. Enforce authenticators
+4. Monitor MFA status
+
+**Owner:** Authentication Lead  
+**Timeline:** 21 dias  
+
+---
+
+### RISK-008: IdP Downtime
+**Estratégia:** EVITAR
+
+**Actions:**
+1. Implement IdP redundancy
+2. Cache authentication data
+3. Failover automation
+4. Recovery procedures
+
+**Owner:** Infrastructure Lead  
+**Timeline:** 90 dias  
+**Investment:** \  
+
+---
+
+### RISK-009: Incorrect Provisioning
+**Estratégia:** MITIGAR
+
+**Actions:**
+1. Approval workflow
+2. Validation process
+3. Automated testing
+4. Audit trails
+
+**Owner:** Access Manager  
+**Timeline:** 30 dias  
+
+---
+
+### RISK-010 a RISK-020
+**Estratégia:** MITIGAR (maioria)
+
+(Detalhes específicos em risk-register.md)
+
+---
+
+## 3. Matriz de Resposta
+
+| Risk ID | Estratégia | Timeline | Budget | Owner |
+|---------|-----------|----------|--------|-------|
+| RISK-001 | Mitigar | 30d | \ | Identity Mgr |
+| RISK-002 | Mitigar | 45d | \ | HR & IT |
+| RISK-003 | Mitigar | 60d | \ | Compliance |
+| RISK-004 | Mitigar | 45d | \ | Security Eng |
+| RISK-005 | Mitigar | 30d | \ | IAM Arch |
+| RISK-006 | Mitigar | 14d | \ | SecOps |
+| RISK-007 | Mitigar | 21d | \ | Auth Lead |
+| RISK-008 | Evitar | 90d | \ | Infrastructure |
+| RISK-009 | Mitigar | 30d | \ | Access Mgr |
+| RISK-010+ | Mitigar | Var | Var | Various |
+
+**Total Budget (P1+P2):** \  
+**Timeline (Critical):** 30-60 dias  
+
+---
+
+## 4. Justificativa PMBOK
+
+### Razão das Estratégias Escolhidas
+
+**EVITAR é ideal quando:**
+- ✅ Risco pode ser completamente eliminado
+- ✅ Solução é viável e custo-efetiva
+- ✅ Não compromete objetivos do projeto
+
+**MITIGAR é ideal quando:**
+- ✅ Risco não pode ser evitado completamente
+- ✅ Redução de probabilidade/impacto é possível
+- ✅ Benefício > custo de mitigação
+
+**TRANSFERIR é ideal quando:**
+- ✅ Terceiro pode gerenciar melhor
+- ✅ Contrato com SLA viável
+- ✅ Custo de transferência < impacto
+
+**ACEITAR é ideal quando:**
+- ✅ Probabilidade é muito baixa
+- ✅ Impacto é aceitável
+- ✅ Custo de resposta > impacto
+
+---
+
+## 5. Monitoramento de Riscos
+
+**Cadência:**
+- Críticos (P1): Diária
+- Altos (P2): Semanal
+- Médios (P3): Bi-semanal
+- Baixos (P4): Mensal
+
+**Trigger de Escalação:**
+- Nova exposição detectada
+- Probabilidade aumenta > 20%
+- Impacto aumenta > 2 níveis
+- Timeline de remediação em risco
+
+---
+
+**Versão:** 1.0.0 | **Aprovação:** Security Committee
