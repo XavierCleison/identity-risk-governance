@@ -1,0 +1,48 @@
+sequenceDiagram
+    participant U as Usuário
+    participant IdP as Identity Provider
+    participant IAM as IAM Platform
+    participant RE as Risk Engine
+    participant AI as IA Generativa
+    participant DB as Dashboard
+    participant Audit as Audit Log
+
+    U->>IdP: 1. Autentica
+    activate IdP
+    IdP->>IAM: 2. Token + Credenciais
+    deactivate IdP
+    
+    activate IAM
+    IAM->>RE: 3. Valida Permissões
+    deactivate IAM
+    
+    activate RE
+    RE->>RE: 4. Verifica Políticas
+    RE->>RE: 5. Detecta Anomalias
+    RE->>AI: 6. Envia para Análise
+    deactivate RE
+    
+    activate AI
+    AI->>AI: 7. Analisa Contexto
+    AI->>AI: 8. Gera Recomendações
+    AI->>RE: 9. Retorna Resultado
+    deactivate AI
+    
+    activate RE
+    RE->>RE: 10. Aplica Estratégia
+    RE->>IAM: 11. Política de Acesso
+    deactivate RE
+    
+    activate IAM
+    IAM->>Audit: 12. Registra Auditoria
+    IAM->>DB: 13. Atualiza Dashboard
+    IAM->>IdP: 14. Concede/Nega Acesso
+    deactivate IAM
+    
+    activate IdP
+    IdP->>U: 15. Resultado
+    deactivate IdP
+    
+    activate DB
+    DB->>DB: 16. Exibe KPIs
+    deactivate DB
