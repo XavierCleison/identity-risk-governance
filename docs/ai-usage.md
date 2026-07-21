@@ -1,647 +1,263 @@
-# 🤖 Guia de Uso de IA Generativa
+﻿# 🤖 Guia de Uso de IA/LLM - Identity Risk Governance
 
-[![Version](https://img.shields.io/badge/version-1.0-blue.svg)]()
-[![Status](https://img.shields.io/badge/status-Production-green.svg)]()
+## 1. Visão Geral
 
-## 📋 Índice
+O **Identity Risk Governance** integra modelos de linguagem (LLMs) para análise contextual e recomendações inteligentes de remediação de riscos IAM.
 
-1. [Princípios de IA](#princípios-de-ia)
-2. [Arquitetura](#arquitetura)
-3. [Casos de Uso](#casos-de-uso)
-4. [Fluxos de Processamento](#fluxos-de-processamento)
-5. [Segurança & Compliance](#segurança--compliance)
-6. [Monitoramento e Feedback](#monitoramento-e-feedback)
+### LLMs Suportados
 
----
-
-## 🎯 Princípios de IA
-
-### Governança de IA
-
-```
-┌─────────────────────────────────────┐
-│    Governance Principles            │
-├─────────────────────────────────────┤
-│ 1. Transparência                    │
-│    └─ Explicar decisões da IA       │
-│                                     │
-│ 2. Accountability                   │
-│    └─ Validação humana obrigatória  │
-│                                     │
-│ 3. Segurança                        │
-│    └─ Proteção de dados sensíveis   │
-│                                     │
-│ 4. Conformidade                     │
-│    └─ LGPD, ISO 27001, regulações   │
-│                                     │
-│ 5. Responsabilidade                 │
-│    └─ Mitigação de viés             │
-└─────────────────────────────────────┘
-```
-
-### Valores Corporativos
-
-| Princípio | Descrição | Implementação |
-|-----------|-----------|---|
-| **Human-in-the-Loop** | Sempre validação humana | Sem ações automáticas críticas |
-| **Explainability** | Explicar recomendações | Confidence scores + Reasoning |
-| **Fairness** | Sem viés discriminatório | Auditoria regular de resultados |
-| **Safety** | Sem degradação de segurança | Testing e validação contínuos |
-| **Privacy** | Privacidade de usuários | Data masking + Criptografia |
+| Modelo | Provider | Capacidade | Custo/1M tokens |
+|--------|----------|-----------|-----------------|
+| GPT-4o | OpenAI | Análise avançada | \ |
+| Claude 3.5 | Anthropic | Análise profunda | \-15 |
+| GPT-3.5 | OpenAI | Análise básica | \.50 |
+| Llama 2 | Meta | Self-hosted | Variável |
 
 ---
 
-## 🏗️ Arquitetura de IA
+## 2. Casos de Uso de IA
 
-### Stack Tecnológico
+### 2.1 Identificação de Riscos
+**Objetivo:** Análise contextual de padrões de acesso anormais
 
-```
-┌─────────────────────────────────────────┐
-│        User Interface Layer             │
-│  Dashboard + API + CLI                  │
-└──────────────────┬──────────────────────┘
-                   │
-┌──────────────────▼──────────────────────┐
-│     Orchestration Layer                 │
-│  Request Router + Load Balancer         │
-└──────────────────┬──────────────────────┘
-                   │
-        ┌──────────┼──────────┐
-        │          │          │
-        ▼          ▼          ▼
-    ┌────────┐ ┌────────┐ ┌────────┐
-    │ Agent 1│ │ Agent 2│ │ Agent 3│
-    │ GPT-4  │ │Claude 3│ │Gemini  │
-    └────────┘ └────────┘ └────────┘
-        │          │          │
-        └──────────┼──────────┘
-                   │
-┌──────────────────▼──────────────────────┐
-│      Context & Knowledge Layer          │
-│  RAG + Vector DB + Company Data         │
-└─────────────────────────────────────────┘
-        │
-┌───────▼───────────────────────────────────┐
-│    Validation & Safety Layer              │
-│  Output Checker + Compliance Validator    │
-└─────────────────────────────────────────────┘
-```
+\\\
+Input: User profile, access logs, peer group data
+Process: LLM analyzes patterns and historical data
+Output: Risk identification with context
+\\\
 
-### Componentes Principais
+**Exemplo:**
+- Usuário alterou comportamento de acesso
+- Login de nova localização geográfica
+- Acesso a recursos não-típicos
+- → Recomendação: Investigar possível comprometimento
 
-#### 1. Input Layer
-```
-Dados de Entrada:
-├─ User/Group data (JSON)
-├─ Permission matrix (CSV/DB)
-├─ Historical events (time-series)
-├─ Company policies (documents)
-└─ Regulatory requirements (documents)
+### 2.2 Análise Qualitativa de Riscos
+**Objetivo:** Avaliação contextual de probabilidade e impacto
 
-Processamento:
-├─ Normalization
-├─ Sanitization
-├─ Anonymization
-└─ Feature engineering
-```
+**Input:**
+- Risco identificado
+- Contexto de negócio
+- Dados históricos
+- Métricas de impacto
 
-#### 2. Prompt Engineering
-```
-Estrutura de Prompt:
-├─ System: Role + Domain expertise
-├─ Context: Company policies + History
-├─ Input: Structured data + Query
-├─ Constraints: Business rules
-└─ Output Format: JSON schema
+**Output:**
+- Probabilidade assesssment
+- Impacto assessment  
+- Prioridade recomendada
+- Score de risco contextual
 
-Exemplo:
-"Você é um especialista em segurança de IAM com 15 anos
-de experiência. Analize os dados de permissão abaixo
-e identifique riscos segundo ISO 27001. Retorne um JSON
-com risks, recommendations e confidence score. Não 
-recomende ações que violem LGPD."
-```
+### 2.3 Geração de Recomendações
+**Objetivo:** Planos de remediação personalizados
 
-#### 3. LLM Orchestration
-```
-Load Balancing:
-├─ Primary: OpenAI GPT-4
-├─ Secondary: Claude 3
-├─ Fallback: Gemini Pro
-└─ Local: Llama 2 (emergency)
+**Exemplo de Recomendação:**
+`
+Risco: Privilege Creep detectado para john.doe@company.com
 
-Seleção de Modelo:
-├─ Complexidade: GPT-4 (10+ análises)
-├─ Velocidade: Claude 3 (< 5 sec)
-├─ Custo: Gemini (budget-constrained)
-└─ Privacy: Llama 2 (sensitive data)
-```
+Contexto:
+- 45 permissões acumuladas em 18 meses
+- Acesso a 3 sistemas críticos
+- SoD violation: Pode criar e aprovar ordens de compra
 
-#### 4. Validation Layer
-```
-Checklist de Validação:
-├─ Output Format ✓
-├─ Confidence Score ✓
-├─ Bias Detection ✓
-├─ Compliance Check ✓
-├─ Security Check ✓
-└─ Reasonableness Check ✓
+Recomendação IA:
+1. Revoke 20 permissions not used in 90 days (Confidence: 95%)
+2. Implement SoD rule enforcement (Risk reduction: 80%)
+3. Enable automated access reviews (Quarterly)
+4. Escalate to manager for final approval (Required)
 
-Rejeição Se:
-├─ Confidence < 0.70
-├─ Violação de policy detectada
-├─ Recomendação impossível
-├─ Formato inválido
-└─ Dados sensíveis expostos
-```
+Plano de Ação:
+- Imediato: Revoke unused permissions
+- Semana 1: Implement SoD rules
+- Semana 4: Setup access reviews
+- Ongoing: Monitor access patterns
+`
+
+### 2.4 Geração de Resumos Executivos
+**Objetivo:** Síntese de riscos em linguagem executiva
+
+**Input:**
+- Riscos da semana
+- Padrões de remediação
+- Métricas de sucesso
+- Próximas ações
+
+**Output:**
+- Resumo executivo (1 página)
+- Top risks
+- Roadmap de ações
+- Métricas de sucesso
+
+### 2.5 Relatórios de Conformidade
+**Objetivo:** Geração automática de relatórios regulatórios
+
+**Output:**
+- ISO 27001 compliance report
+- LGPD compliance certificate
+- GDPR data processing report
+- SOC 2 readiness assessment
 
 ---
 
-## 💼 Casos de Uso
+## 3. Arquitetura de Prompts
 
-### UC1: Identificação de Riscos
+### 3.1 Estrutura de Prompt
 
-**Objetivo**: Detectar automaticamente riscos de IAM
+\\\
+SISTEMA: [Contexto e role do LLM]
 
-**Entrada**:
-```json
-{
-  "users": 8000,
-  "groups": 500,
-  "permissions_matrix": "current_state",
-  "historical_events": "last_90_days",
-  "company_policies": ["segregation_of_duties", "least_privilege"]
-}
-```
+CONTEXTO:
+- Dados do usuário
+- Histórico de acessos
+- Políticas de segurança
+- Padrões de risco
 
-**Processamento**:
-1. Análise estruturada de dados
-2. Comparação com políticas
-3. Identificação de anomalias
-4. Contextualização com história
-5. Geração de insights
+TAREFA: [Específica e clara]
 
-**Saída**:
-```json
-{
-  "risks_identified": [
-    {
-      "id": "RISK-023",
-      "type": "privilege_creep",
-      "description": "User john.doe tem 156 permissões (8x média)",
-      "severity": "HIGH",
-      "confidence": 0.94,
-      "evidence": ["50 new permissions last month", "elevated database access"],
-      "recommendation": "Conduct access review"
-    }
-  ],
-  "summary": "47 riscos identificados, 5 críticos",
-  "processing_time_ms": 3421
-}
-```
+RESTRIÇÕES:
+- Não incluir dados pessoais
+- Manter conformidade LGPD
+- Validar outputs
 
-**SLA**: < 5 minutos por batch
+FORMATO: [JSON/Markdown/Estruturado]
 
----
+INPUT: [Dados específicos]
 
-### UC2: Análise Qualitativa
+OUTPUT: [Esperado]
+\\\
 
-**Objetivo**: Avaliar probabilidade e impacto de riscos
+### 3.2 Técnicas de Prompting
 
-**Entrada**:
-```json
-{
-  "risks": ["SoD_violation", "orphan_accounts", "mfa_disabled"],
-  "company_context": "banking_sector_highly_regulated",
-  "historical_data": "similar_incidents_last_2_years"
-}
-```
+**Chain-of-Thought:**
+`
+Passo 1: Analisar padrões de acesso
+Passo 2: Comparar com grupo de pares
+Passo 3: Avaliar probabilidade de risco
+Passo 4: Calcular impacto potencial
+Passo 5: Gerar recomendação
+`
 
-**Processamento**:
-1. Análise de probabilidade baseada em histórico
-2. Avaliação de impacto no negócio
-3. Cálculo de matriz de priorização
-4. Consideração de controles existentes
-5. Geração de notas justificativas
+**Few-Shot Learning:**
+`
+Exemplo 1: Privilege creep → Risco CRÍTICO
+Exemplo 2: Contas órfãs → Risco CRÍTICO
+Exemplo 3: MFA desabilitado → Risco ALTO
 
-**Saída**:
-```json
-{
-  "risk_assessment": [
-    {
-      "risk_id": "RISK-001",
-      "probability": "MEDIUM",
-      "probability_score": 0.65,
-      "probability_justification": "Similar case occurred 18mo ago",
-      "impact": "CRITICAL",
-      "impact_score": 0.95,
-      "impact_justification": "Would expose 8000+ user data",
-      "priority": 1,
-      "priority_justification": "MEDIUM prob × CRITICAL impact"
-    }
-  ]
-}
-```
-
-**SLA**: < 10 minutos
+Agora analise este caso: [novo caso]
+`
 
 ---
 
-### UC3: Recomendações de Mitigação
+## 4. Controles de Segurança
 
-**Objetivo**: Gerar planos de ação baseado em PMBOK
+### 4.1 Prevenção de Prompt Injection
 
-**Entrada**:
-```json
-{
-  "risk": "RISK-001_SoD_Violation",
-  "probability": 0.65,
-  "impact": "CRITICAL",
-  "company_size": "8000_employees",
-  "industry": "banking",
-  "available_resources": "10_people_3_months"
-}
-```
+**Técnicas:**
+- ✅ Input sanitization
+- ✅ Semantic escaping
+- ✅ Context boundaries
+- ✅ Output validation
 
-**Processamento**:
-1. Análise de estratégias possíveis (Evitar, Mitigar, Transferir, Aceitar)
-2. Geração de planos de ação realistas
-3. Estimativa de esforço e custo
-4. Identificação de dependências
-5. Cálculo de ROI
+**Exemplo de Proteção:**
+`python
+# Sanitize user input
+user_input = sanitize_prompt(user_input)
 
-**Saída**:
-```json
-{
-  "strategies": [
-    {
-      "strategy": "MITIGATE",
-      "strategy_rationale": "Não é viável eliminar SoD completamente",
-      "action_plan": [
-        {
-          "action": "Enforce SoD Policy",
-          "duration_days": 30,
-          "effort_hours": 80,
-          "cost_usd": 4000,
-          "owner": "GRC Team",
-          "dependencies": ["Policy approval"],
-          "success_criteria": ["100% policy compliance"]
-        }
-      ],
-      "total_effort_hours": 240,
-      "total_cost_usd": 12000,
-      "estimated_risk_reduction": 0.60,
-      "roi_months": 4
-    }
-  ]
-}
-```
+# Add context boundary
+system_prompt = "You are a security analyst. You can only discuss..."
 
-**SLA**: < 15 minutos
+# Validate output
+validated_output = validate_against_schema(llm_output)
+`
+
+### 4.2 Proteção de Dados Sensíveis
+
+**Antes de enviar para LLM:**
+- ✅ Remover PII (nomes, emails, CPF)
+- ✅ Anonimizar IDs de usuário
+- ✅ Criptografar dados sensíveis
+- ✅ Usar synthetic examples
+
+**Exemplo:**
+`
+ANTES: "john.doe@company.com acessou BD_CUSTOMERS"
+DEPOIS: "USER_001 acessou DB_CUSTOMER_DATA"
+`
+
+### 4.3 Validação de Outputs
+
+**Antes de usar recomendação da IA:**
+
+1. ✅ **Schema Validation**: Output segue formato esperado
+2. ✅ **Sanity Check**: Recomendação é razoável
+3. ✅ **Confidence Score**: Confiança > threshold
+4. ✅ **Expert Review**: Revisão humana para críticos
+5. ✅ **Audit Trail**: Log completo de decisão
 
 ---
 
-### UC4: Relatório Executivo
+## 5. Prompts Utilizados
 
-**Objetivo**: Síntese executiva formatada
+### Arquivo: prompts/identify-risks.md
+Utilizado para identificar riscos de identidade
 
-**Entrada**:
-```json
-{
-  "risks": "all_47_risks",
-  "period": "last_30_days",
-  "audience": "CIO_CISO",
-  "format": "executive_summary"
-}
-```
+### Arquivo: prompts/executive-summary.md
+Utilizado para resumir riscos para executivos
 
-**Processamento**:
-1. Seleção e priorização de riscos
-2. Síntese de insights principais
-3. Cálculo de métricas-chave
-4. Geração de recomendações estratégicas
-5. Formatação para apresentação
-
-**Saída**:
-```markdown
-# Executive Summary - Identity Risk Governance (July 2026)
-
-## Key Metrics
-- Risks Identified: 47
-- Critical Risks: 5 (↓20% vs last month)
-- Compliance Score: 88%
-- Mean Time to Detect: 2.3 minutes
-
-## Top 3 Risks
-1. SoD Violation - CRITICAL (Probability: HIGH)
-2. Privilege Creep - CRITICAL (Probability: MEDIUM)
-3. Orphan Accounts - CRITICAL (Probability: MEDIUM)
-
-## Recommended Actions
-1. Enforce MFA immediately (0-30 days)
-2. Conduct SoD access review (30-60 days)
-3. Implement AI-powered continuous monitoring (60+ days)
-
-## Budget Impact
-- Immediate actions: $50,000
-- Estimated risk mitigation value: $500,000
-- ROI: 900%
-```
-
-**SLA**: < 5 minutos
+### Arquivo: prompts/stakeholder-report.md
+Utilizado para comunicar riscos a stakeholders
 
 ---
 
-## 🔄 Fluxos de Processamento
+## 6. Governança de IA
 
-### Fluxo 1: Real-Time Risk Detection (Trigger-based)
+### 6.1 Políticas
 
-```
-IAM Event Occurs
-     ↓
-┌────────────────────────────────────┐
-│ Detect Trigger                     │
-│ (New permission, Group change)     │
-└──────────────┬─────────────────────┘
-               │
-        ┌──────▼──────┐
-        │ Severity?   │
-        └──┬────┬───┬─┘
-      LOW  │MED │HI/CRIT
-           │    │
-           │    ▼
-           │  ┌────────────────┐
-           │  │ Send to LLM    │
-           │  │ for Analysis   │
-           │  └─────┬──────────┘
-           │        │
-           │        ▼
-           │  ┌────────────────┐
-           │  │ Generate Risk  │
-           │  │ Assessment     │
-           │  └─────┬──────────┘
-           │        │
-           ▼        ▼
-        ┌────────────────────┐
-        │ Human Validation   │
-        │ (< 5 minutes)      │
-        └─────┬──────────────┘
-              │
-              ▼
-        ┌────────────────────┐
-        │ Action Taken       │
-        │ (Approved/Rejected)│
-        └─────┬──────────────┘
-              │
-              ▼
-        ┌────────────────────┐
-        │ Log & Alert        │
-        │ Stakeholders       │
-        └────────────────────┘
-```
+| Política | Descrição |
+|----------|-----------|
+| **Usage Policy** | Quando e como usar IA |
+| **Cost Policy** | Orçamento máximo por modelo |
+| **Quality Policy** | Padrão de qualidade mínimo |
+| **Audit Policy** | Logging e compliance |
 
-### Fluxo 2: Batch Analysis (Scheduled)
+### 6.2 Governança de Modelos
 
-```
-Scheduler (Daily 02:00 AM)
-     ↓
-┌────────────────────────────┐
-│ Extract IAM Snapshot       │
-│ (8000 users, 500 groups)   │
-└──────────────┬─────────────┘
-               │
-               ▼
-┌────────────────────────────┐
-│ Segment by Risk Category   │
-│ (SoD, Privilege Creep, ... │
-└──────────────┬─────────────┘
-               │
-      ┌────────┼────────┐
-      │        │        │
-      ▼        ▼        ▼
-    SoD   Privilege  Orphan
-   Check   Creep    Accounts
-      │        │        │
-      └────────┼────────┘
-               │
-               ▼
-        ┌──────────────────────┐
-        │ Parallel LLM Analysis│
-        │ (3 workers)          │
-        └────────┬─────────────┘
-                 │
-                 ▼
-        ┌──────────────────────┐
-        │ Consolidate Results  │
-        │ (Deduplication)      │
-        └────────┬─────────────┘
-                 │
-                 ▼
-        ┌──────────────────────┐
-        │ Prioritize Risks     │
-        │ (Matrix: P x I)      │
-        └────────┬─────────────┘
-                 │
-                 ▼
-        ┌──────────────────────┐
-        │ Generate Report      │
-        │ & Dashboard Update   │
-        └────────┬─────────────┘
-                 │
-                 ▼
-        ┌──────────────────────┐
-        │ Send Alerts to Team  │
-        │ (Email, Slack, SMS)  │
-        └──────────────────────┘
-```
+- ✅ Version pinning (sempre usar versão conhecida)
+- ✅ Approval gate para novos modelos
+- ✅ Quarterly performance reviews
+- ✅ ROI tracking
+
+### 6.3 Conformidade
+
+- ✅ LGPD: Sem dados pessoais em prompts
+- ✅ GDPR: Right to explanation
+- ✅ ISO 27001: Auditoria completa
+- ✅ SOC 2: Logging de todas as decisões
 
 ---
 
-## 🔒 Segurança & Compliance
+## 7. Métricas de IA
 
-### Data Protection
-
-```
-┌─ Input Sanitization ─┐
-│ • Remove PII/Secrets │
-│ • Normalize data     │
-│ • Validate schema    │
-└─────────────────────┘
-         │
-         ▼
-┌─ Encryption ─────────┐
-│ • In-transit: TLS1.3 │
-│ • At-rest: AES-256   │
-│ • Keys: Vault        │
-└─────────────────────┘
-         │
-         ▼
-┌─ Access Control ─────┐
-│ • RBAC + ABAC        │
-│ • API Key + JWT      │
-│ • Audit logging      │
-└─────────────────────┘
-         │
-         ▼
-┌─ Output Masking ──────┐
-│ • PII anonymization   │
-│ • Credential removal  │
-│ • Data classification │
-└─────────────────────┘
-```
-
-### Compliance Checks
-
-| Regulação | Checklist | Status |
-|-----------|-----------|--------|
-| **LGPD** | ✅ Data minimization, ✅ Consent, ✅ Data retention | Compliant |
-| **ISO 27001** | ✅ Encryption, ✅ Access control, ✅ Audit | Compliant |
-| **SOC 2** | ✅ Logging, ✅ Integrity, ✅ Availability | Compliant |
-| **GDPR** | ✅ Right to explanation, ✅ No profiling abuse | Compliant |
-
-### Mitigação de Riscos de IA
-
-| Risco | Descrição | Mitigação |
-|-------|-----------|-----------|
-| **Hallucination** | IA gera dados fictícios | Validation + Thresholds |
-| **Bias** | Discriminação em recomendações | Regular audits + Testing |
-| **Prompt Injection** | Manipulação de prompts | Input sanitization |
-| **Token Leakage** | API keys expostas | Vault + Rotation |
-| **Model Drift** | Degradação de performance | Monitoring + Retraining |
+| Métrica | Alvo | Frequência |
+|---------|------|-----------|
+| Acurácia de detecção | > 95% | Semanal |
+| Taxa de falsos positivos | < 5% | Semanal |
+| Confiança média | > 0.85 | Semanal |
+| Latência P95 | < 5s | Diária |
+| Custo/requisição | < \.01 | Mensal |
 
 ---
 
-## 📊 Monitoramento e Feedback
+## 8. Troubleshooting
 
-### Métricas de Performance
+### Problema: Recomendações inconsistentes
+**Solução:** Aumentar temperature para determinismo
 
-```
-LLM Metrics:
-├─ Response Latency (p50, p95, p99)
-├─ Token Usage (input, output, cost)
-├─ Error Rate (timeouts, invalid output)
-└─ Model Selection (which model used)
+### Problema: Dados sensíveis no output
+**Solução:** Adicionar validação de regex + manual review
 
-Quality Metrics:
-├─ Confidence Score (avg, distribution)
-├─ Validation Pass Rate (% approved)
-├─ False Positive Rate
-└─ False Negative Rate
-
-Business Metrics:
-├─ Risks Detected (total, by category)
-├─ Actions Recommended (accepted %)
-├─ Time to Resolution (hours)
-└─ ROI (value created vs cost)
-```
-
-### Dashboard de Monitoramento
-
-```
-┌─ LLM Health ──────────────┐
-│ • Latency: 2.3 sec (✓)    │
-│ • Errors: 0.1% (✓)        │
-│ • Cost: $230/day (✓)      │
-└───────────────────────────┘
-
-┌─ Quality Metrics ─────────┐
-│ • Confidence: 0.87 (✓)    │
-│ • Validation: 93% (✓)     │
-│ • FPR: 5.2% (↗)           │
-└───────────────────────────┘
-
-┌─ Recommendations ─────────┐
-│ • Generated: 47 (this week)│
-│ • Accepted: 40 (85%)      │
-│ • Implemented: 12 (26%)   │
-└───────────────────────────┘
-```
-
-### Feedback Loop
-
-```
-1. User Validates Recommendation
-   └─ Approved / Rejected / Modified
-
-2. Capture Feedback
-   └─ Why was it rejected?
-   └─ What was changed?
-   └─ Was outcome expected?
-
-3. Store Training Data
-   └─ Input + Output + Feedback
-   └─ Confidence adjustment
-
-4. Analyze Patterns
-   └─ Common errors?
-   └─ Model bias?
-   └─ Performance degradation?
-
-5. Retrain (Monthly)
-   └─ Fine-tuning com dados corporativos
-   └─ Validação em staging
-   └─ Deploy se performance melhora
-
-6. Communicate Improvements
-   └─ Share with team
-   └─ Update documentation
-   └─ Celebrate wins
-```
+### Problema: Latência alta
+**Solução:** Usar modelo menor ou cache de resultados
 
 ---
 
-## 🎓 Exemplos de Prompts
-
-### Prompt 1: Identificação de Riscos
-
-```
-Você é um especialista em Segurança de Identidades e Acesso (IAM)
-com 20 anos de experiência em conformidade com ISO 27001 e LGPD.
-
-Contexto corporativo:
-- Tamanho: 8000 funcionários
-- Indústria: Financeiro
-- Crítico para conformidade: SoD (Segregação de Deveres)
-- Políticas: Least Privilege, MFA obrigatório, 90-day reviews
-
-Dados de Entrada:
-- Usuários: 8000 ativos, 156 administrativos
-- Grupos: 500 grupos de acesso
-- Permissões: 50,000 atribuições únicas
-- Mudanças últimas 24h: 127 alterações de permissão
-
-Tarefa:
-1. Identifique todos os riscos detectáveis nestes dados
-2. Para cada risco, forneça:
-   - ID único (RISK-XXX)
-   - Tipo (SoD, Privilege Creep, Orphan, MFA, etc)
-   - Probabilidade (ALTA/MÉDIA/BAIXA)
-   - Impacto (CRÍTICO/ALTO/MÉDIO/BAIXO)
-   - Evidência específica dos dados
-   - Recomendação
-
-3. Retorne em JSON estruturado
-4. Forneça confidence score (0.0-1.0) para cada risco
-5. Ordene por prioridade (Probability × Impact)
-
-Restrições:
-- Não recomende ações que violem LGPD
-- Não mencione dados de PII especificamente
-- Foco em riscos com probabilidade > 30%
-```
-
----
-
-## 📝 Documentação Relacionada
-
-- 📖 [Architecture](architecture.md)
-- 📖 [Executive Summary](executive-summary.md)
-- 📖 [Risk Register](../risks/risk-register.md)
-- 📖 [Prompts](../prompts/)
-
----
-
-**Última atualização**: Julho 21, 2026  
-**Status**: ✅ Production Ready  
-**Revisor**: AI Governance Board
-
+**Versão:** 1.0.0 | **Data:** 2026-07-21
