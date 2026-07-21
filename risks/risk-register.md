@@ -1,603 +1,408 @@
-# ⚠️ Risk Register - Identity Risk Governance
+﻿# 📋 Registro de Riscos IAM - Identity Risk Governance
 
-[![Version](https://img.shields.io/badge/registry-v1.0-blue.svg)]()
-[![Update](https://img.shields.io/badge/last_update-2026--07--21-green.svg)]()
-[![Risks](https://img.shields.io/badge/total_risks-23-red.svg)]()
-
-## 📋 Resumo Executivo
-
-Este registro contém todos os riscos identificados no programa de governança de identidade corporativa, com análise qualitativa, estratégias de resposta e planos de ação baseados em PMBOK.
+**Data de Criação:** 2026-07-21  
+**Última Atualização:** 2026-07-21  
+**Versão:** 1.0.0  
+**Status:** Active
 
 ---
 
-## 📊 Distribuição de Riscos por Severidade
+## 📊 Resumo Executivo de Riscos
 
-| Severidade | Quantidade | % | Trend |
-|-----------|-----------|---|-------|
-| 🔴 **CRÍTICO** | 5 | 22% | ↘️ |
-| 🟠 **ALTO** | 9 | 39% | → |
-| 🟡 **MÉDIO** | 7 | 30% | ↗️ |
-| 🟢 **BAIXO** | 2 | 9% | → |
-| **TOTAL** | **23** | 100% | |
+- **Total de Riscos:** 20+
+- **Riscos Críticos:** 3
+- **Riscos Altos:** 6
+- **Riscos Médios:** 8
+- **Riscos Baixos:** 3+
 
 ---
 
-## 🔴 RISCOS CRÍTICOS
+## 🔴 RISCOS CRÍTICOS (Impacto + Probabilidade = MÁXIMA)
 
-### RISK-001: Violação de Segregação de Deveres (SoD)
+### RISK-001: Privilege Creep / Privilege Escalation
 
 | Campo | Valor |
 |-------|-------|
-| **Categoria** | Compliance & Governance |
-| **Probabilidade** | MÉDIA (0.65) |
-| **Impacto** | CRÍTICO (0.95) |
-| **Prioridade** | 1 |
-| **Status** | ATIVO |
-| **Owner** | GRC Manager |
-| **Data Identificação** | 2026-06-15 |
-
-**Descrição**:
-Usuários possuem combinações de permissões conflitantes que violam princípios de segregação de deveres, como acumular funções de autorização e auditoria na mesma conta.
-
-**Cenário de Risco**:
-Um usuário administrativo com permissão de "Aprovar Transferências" e "Auditar Transferências" na mesma conta pode encobrir fraudes.
-
-**Impacto Potencial**:
-- Fraude financeira não detectada
-- Violação de conformidade ISO 27001
-- Penalidades regulatórias (BACEN, CVM)
-- Perda de reputação corporativa
-- Potencial perda de R$ 10M+
-
-**Controles Existentes**:
-- ✅ Política de SoD documentada
-- ❌ Enforcement automático (não implementado)
-- ❌ Alertas em tempo real (não implementado)
-
-**Estratégia**: **MITIGAR**
-
-**Plano de Ação**:
-1. **Fase 1** (0-30 dias): Auditoria de SoD atual
-   - Varrimento completo de 8000 usuários
-   - Identificação de violações
-   - Mapeamento de conflitos
-   - **Responsável**: GRC Team
-   - **Esforço**: 160 horas
-   
-2. **Fase 2** (30-60 dias): Remediação
-   - Separação de contas onde viável
-   - Criação de roles balanceados
-   - Aprovação de exceções
-   - **Responsável**: IAM + GRC
-   - **Esforço**: 240 horas
-   
-3. **Fase 3** (60-90 dias): Enforcement
-   - Implementar regras automáticas
-   - Configurar alertas
-   - Validação de 100% de novos acessos
-   - **Responsável**: Security Ops
-   - **Esforço**: 80 horas
-
-**Indicadores de Sucesso**:
-- ✅ 100% de conformidade SoD
-- ✅ Zero novos casos de violação
-- ✅ Compliance audit passa
-- ✅ Tempo de detecção < 1 min
-
-**Custo Estimado**: R$ 120,000
-
----
-
-### RISK-002: Privilege Creep em Contas Administrativas
-
-| Campo | Valor |
-|-------|-------|
-| **Categoria** | Access Management |
-| **Probabilidade** | MÉDIA (0.60) |
-| **Impacto** | CRÍTICO (0.90) |
-| **Prioridade** | 2 |
-| **Status** | ATIVO |
-| **Owner** | IAM Manager |
-| **Data Identificação** | 2026-06-20 |
-
-**Descrição**:
-Acúmulo gradual de permissões em contas administrativas ao longo do tempo, sem revisão ou revogação periódica.
-
-**Cenário de Risco**:
-Um DBA tem 450+ permissões após 8 anos, incluindo acesso a dados financeiros, recursos de RH, sistemas críticos de produção e ambiente de testes.
-
-**Impacto Potencial**:
-- Insider threat aumentado
-- Violação não intencional de princípio de least privilege
-- Risco de comprometimento total da identidade
-- Impossibilidade de auditoria
-
-**Evidência**:
-- 156 admins com média de 320 permissões cada
-- 12 admins com > 500 permissões
-- Aumento de 2.3% ao mês em média
-
-**Estratégia**: **MITIGAR**
-
-**Plano de Ação**:
-1. Implementar access reviews trimestrais obrigatórias
-2. Automação de detecção de privilege creep via IA
-3. Dashboard de "permission trending" por usuário
-4. Alertas quando ↑20% de permissões em 30 dias
-5. Revogação automática de permissões não-utilizadas > 90 dias
-
-**Responsável**: IAM Manager  
-**Custo**: R$ 85,000  
-**Timeline**: 60 dias
-
----
-
-### RISK-003: Contas Órfãs em Sistemas Críticos
-
-| Campo | Valor |
-|-------|-------|
+| **ID** | RISK-001 |
 | **Categoria** | Access Control |
-| **Probabilidade** | MÉDIA (0.55) |
-| **Impacto** | CRÍTICO (0.95) |
-| **Prioridade** | 3 |
-| **Status** | DETECTADO |
-| **Owner** | IAM Manager |
-| **Data Identificação** | 2026-07-10 |
-
-**Descrição**:
-Contas de usuários sem proprietário designado, sem supervisor, ou órfãs após saída de funcionários.
-
-**Cenário de Risco**:
-Conta de ex-funcionário "carlos.silva" com acesso a 47 sistemas críticos permanece ativa 6 meses após demissão.
-
-**Impacto Potencial**:
-- Acesso não autorizado a sistemas críticos
-- Fraude corporativa
-- Vazamento de dados sensíveis
-- Violação LGPD
-
-**Evidência**:
-- **47 contas órfãs identificadas** em scan recente
-- 23 em sistemas de produção críticos
-- 5 com acesso a dados sensíveis (PII)
-
-**Estratégia**: **EVITAR + MITIGAR**
-
-**Plano de Ação**:
-1. **Imediato (24 horas)**: Desabilitar contas órfãs críticas
-2. **48 horas**: Auditoria completa de todas as 47 contas
-3. **1 semana**: Deprovisioning das contas confirmadas como órfãs
-4. **30 dias**: Implementar processo de ownership assignment
-5. **60 dias**: Implementar automated lifecycle management
-
-**Responsável**: IAM Team  
-**Custo**: R$ 45,000  
-**Timeline**: 30 dias urgente
+| **Descrição** | Usuários acumulam permissões ao longo do tempo sem remoção, levando a privilégios excessivos |
+| **Probabilidade** | 🔴 ALTA (80%) |
+| **Impacto** | 🔴 CRÍTICO (9/10) |
+| **Prioridade** | 🔴 P1 - CRÍTICO |
+| **Score de Risco** | 9.2/10 |
+| **Detecção** | Análise de permissões acumuladas, anomalia behavioral |
+| **Estratégia** | **Mitigar** |
+| **Plano de Ação** | 1. Implementar periodic access reviews (quarterly) 2. Automation para revogar unused permissions 3. Real-time privilege monitoring 4. SoD enforcement |
+| **Responsável** | Identity Manager |
+| **Prazo** | 30 dias |
+| **Status** | In Progress |
 
 ---
 
-### RISK-004: Identity Provider Indisponível
+### RISK-002: Contas Órfãs (Abandoned/Orphaned Accounts)
 
 | Campo | Valor |
 |-------|-------|
-| **Categoria** | Infrastructure & Resilience |
-| **Probabilidade** | BAIXA (0.15) |
-| **Impacto** | CRÍTICO (0.98) |
-| **Prioridade** | 4 |
-| **Status** | PREVENTIVO |
-| **Owner** | Infrastructure Manager |
-| **Data Identificação** | 2026-05-30 |
-
-**Descrição**:
-Falha total do Identity Provider (Okta/Azure AD) resultaria em negação de acesso para todos os 8000 usuários corporativos.
-
-**Cenário de Risco**:
-Outage de 3+ horas no IdP durante horário de negócio → Operações paralisa.
-
-**Impacto Potencial**:
-- 8000+ usuários sem acesso
-- Negócio parado completamente
-- SLA violado
-- Prejuízo estimado: R$ 500K/hora
-- Reputação afetada
-- Clientes impactados
-
-**Controles Existentes**:
-- Single point of failure (Okta Production)
-- RTO: N/A (sem DR)
-- RPO: N/A (sem DR)
-
-**Estratégia**: **MITIGAR + TRANSFERIR**
-
-**Plano de Ação**:
-1. Implementar redundância de IdP (dual-region)
-2. Configurar failover automático (< 5 minutos)
-3. Contrato de DR com provider (SLA 99.99%)
-4. Cache local de tokens (emergency mode)
-5. Testes de failover mensais
-6. Seguro de cyber (risk transfer)
-
-**Responsável**: Infrastructure Manager  
-**Custo**: R$ 300,000 (anual)  
-**Timeline**: 90 dias
+| **ID** | RISK-002 |
+| **Categoria** | Account Lifecycle |
+| **Descrição** | Contas de ex-funcionários, contractors, ou systems não são desabilitadas, permanecendo com acesso ativo |
+| **Probabilidade** | 🔴 ALTA (75%) |
+| **Impacto** | 🔴 CRÍTICO (9/10) |
+| **Prioridade** | 🔴 P1 - CRÍTICO |
+| **Score de Risco** | 8.9/10 |
+| **Detecção** | HR integration, Access logs analysis, No login > 90 dias |
+| **Estratégia** | **Mitigar** |
+| **Plano de Ação** | 1. Integrar com HR system para auto-detection 2. Disable contas inativas > 90 dias 3. Quarterly cleanup process 4. Alert para contas suspeitas |
+| **Responsável** | HR & IT Lead |
+| **Prazo** | 45 dias |
+| **Status** | Planned |
 
 ---
 
-### RISK-005: Recomendações Incorretas da IA
+### RISK-003: Segregation of Duties Violations (SoD)
 
 | Campo | Valor |
 |-------|-------|
-| **Categoria** | AI & Automation |
-| **Probabilidade** | MÉDIA (0.50) |
-| **Impacto** | CRÍTICO (0.85) |
-| **Prioridade** | 5 |
-| **Status** | MITIGANDO |
-| **Owner** | Security Director |
-| **Data Identificação** | 2026-07-01 |
-
-**Descrição**:
-O LLM gera recomendações de segurança inválidas, inaplicáveis ou potencialmente prejudiciais.
-
-**Cenário de Risco**:
-IA recomenda revogar permissão de "System Administrator" do DBA critical.db, causando falha em backup automatizado noturno.
-
-**Impacto Potencial**:
-- Serviço comprometido/interrompido
-- Reputação em risco
-- Confiança em AI reduzida
-- Potencial SLA violation
-- Incident investigation custoso
-
-**Mitigação em Andamento**:
-- ✅ Implementar validação humana obrigatória
-- ✅ Confidence score thresholds (min 0.75)
-- ✅ Testing em staging antes de produção
-- ⏳ Feedback loop para treinar modelo
-
-**Estratégia**: **MITIGAR**
-
-**Plano de Ação**:
-1. Validação humana de 100% de recomendações críticas/altas
-2. Implementar confidence scoring (0.0-1.0)
-3. Rejeitar automaticamente se confidence < 0.70
-4. Testes de acurácia mensal
-5. Feedback loop com histórico de validações
-6. Fine-tuning com dados corporativos trimestral
-
-**Responsável**: Security Director  
-**Custo**: R$ 80,000  
-**Timeline**: 45 dias
+| **ID** | RISK-003 |
+| **Categoria** | Compliance |
+| **Descrição** | Usuário possui permissões conflitantes (ex: criar e aprovar ordens), violando SoD |
+| **Probabilidade** | 🔴 ALTA (70%) |
+| **Impacto** | 🔴 CRÍTICO (9/10) |
+| **Prioridade** | 🔴 P1 - CRÍTICO |
+| **Score de Risco** | 8.7/10 |
+| **Detecção** | Automated SoD rules, Periodic audits |
+| **Estratégia** | **Mitigar** |
+| **Plano de Ação** | 1. Map SoD rules por processo crítico 2. Implement automated SoD enforcement 3. Remediate existing violations 4. Real-time monitoring |
+| **Responsável** | Compliance Officer |
+| **Prazo** | 60 dias |
+| **Status** | In Progress |
 
 ---
 
 ## 🟠 RISCOS ALTOS
 
-### RISK-006: MFA Desabilitado em Contas Críticas
+### RISK-004: Shadow Identities (Unmanaged Accounts)
 
 | Campo | Valor |
 |-------|-------|
+| **ID** | RISK-004 |
+| **Categoria** | Access Management |
+| **Descrição** | Contas criadas fora do processo formal (ex: service accounts não-documentados) |
+| **Probabilidade** | 🟠 MÉDIA-ALTA (65%) |
+| **Impacto** | 🟠 ALTO (8/10) |
+| **Prioridade** | 🟠 P2 - ALTO |
+| **Score de Risco** | 7.8/10 |
+| **Estratégia** | **Mitigar** |
+| **Plano de Ação** | 1. Discovery de shadow accounts 2. Centralize service account management 3. Implement provisioning governance 4. Regular audit trails |
+| **Responsável** | Security Engineer |
+| **Prazo** | 45 dias |
+
+---
+
+### RISK-005: Excesso de Privilégios (Over-privileged Users)
+
+| Campo | Valor |
+|-------|-------|
+| **ID** | RISK-005 |
+| **Categoria** | Access Control |
+| **Descrição** | Usuários com privilégios administrative sem justificativa de negócio |
+| **Probabilidade** | 🟠 ALTA (72%) |
+| **Impacto** | 🟠 ALTO (8/10) |
+| **Prioridade** | 🟠 P2 - ALTO |
+| **Score de Risco** | 7.6/10 |
+| **Estratégia** | **Mitigar** |
+| **Plano de Ação** | 1. Audit de admin users 2. Implement least privilege principle 3. Use Just-In-Time (JIT) access 4. MFA mandatory for admins |
+| **Responsável** | IAM Architect |
+| **Prazo** | 30 dias |
+
+---
+
+### RISK-006: Tokens Comprometidos (Compromised Credentials)
+
+| Campo | Valor |
+|-------|-------|
+| **ID** | RISK-006 |
 | **Categoria** | Authentication |
-| **Probabilidade** | ALTA (0.75) |
-| **Impacto** | ALTO (0.80) |
-| **Prioridade** | 6 |
-| **Status** | ATIVO |
-| **Owner** | Security Manager |
-
-**Descrição**: 156 contas administrativas sem MFA habilitado.
-
-**Impacto**: Credential compromise risco = 5x maior
-
-**Plano de Ação**: 
-1. Enforce MFA obrigatória (30 dias)
-2. Monitorar compliance (diário)
-3. Escalação automática de exceções
-4. Educação de usuários
-
-**Custo**: R$ 15,000  
-**Timeline**: 30 dias
+| **Descrição** | Tokens JWT, session keys ou passwords expostos ou stolen |
+| **Probabilidade** | 🟠 MÉDIA (55%) |
+| **Impacto** | 🟠 ALTO (8/10) |
+| **Prioridade** | 🟠 P2 - ALTO |
+| **Score de Risco** | 7.2/10 |
+| **Estratégia** | **Mitigar** |
+| **Plano de Ação** | 1. Implement token rotation policy 2. Monitor for leaked credentials 3. Force password reset if compromised 4. Enable conditional access |
+| **Responsável** | Security Operations |
+| **Prazo** | 14 dias |
 
 ---
 
-### RISK-007: Prompt Injection em Sistema de IA
+### RISK-007: MFA Desabilitado (Multi-Factor Auth Disabled)
 
 | Campo | Valor |
 |-------|-------|
-| **Categoria** | AI Security |
-| **Probabilidade** | MÉDIA (0.45) |
-| **Impacto** | ALTO (0.82) |
-| **Prioridade** | 7 |
-| **Status** | MONITORADO |
-| **Owner** | Security Engineer |
-
-**Descrição**: Usuário manipula prompts para bypass de regras de segurança.
-
-**Cenário**: Input injection causa IA gerar recomendações maliciosas.
-
-**Mitigação**:
-- Input sanitization + validation
-- Rate limiting por usuário
-- Audit trail de todas as interações IA
-- Anomaly detection
-
-**Custo**: R$ 40,000  
-**Timeline**: 60 dias
+| **ID** | RISK-007 |
+| **Categoria** | Authentication |
+| **Descrição** | Usuários desabilitam MFA ou usam métodos fracos de 2FA |
+| **Probabilidade** | 🟠 MÉDIA (60%) |
+| **Impacto** | 🟠 ALTO (8/10) |
+| **Prioridade** | 🟠 P2 - ALTO |
+| **Score de Risco** | 7.0/10 |
+| **Estratégia** | **Mitigar** |
+| **Plano de Ação** | 1. Make MFA mandatory (policy) 2. Remove weak 2FA methods 3. Enforce authenticators 4. Monitor MFA status |
+| **Responsável** | Authentication Lead |
+| **Prazo** | 21 dias |
 
 ---
 
-### RISK-008: Revogação Tardia de Permissões
+### RISK-008: Identity Provider Indisponível (IdP Downtime)
 
 | Campo | Valor |
 |-------|-------|
-| **Categoria** | Lifecycle Management |
-| **Probabilidade** | ALTA (0.80) |
-| **Impacto** | ALTO (0.75) |
-| **Prioridade** | 8 |
-| **Status** | ATIVO |
-
-**Descrição**: Delay de dias a semanas na revogação de permissões após saída de funcionário.
-
-**Impacto**: Ex-funcionários com acesso continuado.
-
-**Plano de Ação**:
-1. Automation de offboarding (< 1 hora)
-2. APIs integradas com RH system
-3. Alertas de contas ativas após término
-
-**Custo**: R$ 60,000  
-**Timeline**: 45 dias
+| **ID** | RISK-008 |
+| **Categoria** | Availability |
+| **Descrição** | IdP (Active Directory, Azure AD) fica offline, impactando toda autenticação |
+| **Probabilidade** | 🟠 BAIXA-MÉDIA (30%) |
+| **Impacto** | 🟠 ALTO (8/10) |
+| **Prioridade** | 🟠 P2 - ALTO |
+| **Score de Risco** | 6.0/10 |
+| **Estratégia** | **Mitigar** |
+| **Plano de Ação** | 1. Implement IdP redundancy 2. Cache authentication data 3. Failover automation 4. Recovery procedures |
+| **Responsável** | Infrastructure Lead |
+| **Prazo** | 90 dias |
 
 ---
 
-### RISK-009: Tokens Comprometidos
+### RISK-009: Provisionamento Incorreto (Incorrect Provisioning)
 
 | Campo | Valor |
 |-------|-------|
-| **Categoria** | Secrets Management |
-| **Probabilidade** | MÉDIA (0.50) |
-| **Impacto** | ALTO (0.88) |
-| **Prioridade** | 9 |
-| **Status** | MITIGANDO |
-
-**Descrição**: API tokens ou sessão tokens vazados/expostos.
-
-**Mitigação**:
-- Token rotation policy (15 dias)
-- Vault centralizado (HashiCorp)
-- Encryption at-rest + in-transit
-- Token invalidation on-demand
-
-**Custo**: R$ 70,000  
-**Timeline**: 60 dias
-
----
-
-### RISK-010: Classificação Incorreta de Criticidade
-
-| Campo | Valor |
-|-------|-------|
-| **Categoria** | Risk Management |
-| **Probabilidade** | MÉDIA (0.55) |
-| **Impacto** | ALTO (0.78) |
-| **Prioridade** | 10 |
-| **Status** | MITIGANDO |
-
-**Descrição**: Riscos classificados com severidade incorreta.
-
-**Exemplo**: CRÍTICO marcado como BAIXO → ações não tomadas.
-
-**Mitigação**:
-- Validation rules na classificação
-- LLM double-check automático
-- Manual review de edge cases
-- Auditoria mensal
-
-**Custo**: R$ 25,000  
-**Timeline**: 30 dias
-
----
-
-### RISK-011: Vazamento de Informações em Logs
-
-| Campo | Valor |
-|-------|-------|
-| **Categoria** | Data Protection |
-| **Probabilidade** | MÉDIA (0.50) |
-| **Impacto** | ALTO (0.85) |
-| **Prioridade** | 11 |
-| **Status** | MITIGANDO |
-
-**Descrição**: Logs contêm PII, senhas, tokens ou dados sensíveis.
-
-**Mitigação**:
-- Data masking automático
-- Encryption de logs
-- Access control restrito
-- Purga automática
-
-**Custo**: R$ 50,000
-
----
-
-### RISK-012: Provisionamento Incorreto de Acesso
-
-| Campo | Valor |
-|-------|-------|
-| **Categoria** | Identity Management |
-| **Probabilidade** | MÉDIA (0.60) |
-| **Impacto** | ALTO (0.72) |
-| **Prioridade** | 12 |
-| **Status** | ATIVO |
-
-**Descrição**: Usuários recebem permissões incorretas ou excessivas durante onboarding.
-
-**Impacto**: Privilege escalation inadvertida.
-
-**Plano de Ação**:
-- Approval workflow obrigatório
-- Validação de JD vs. permissões
-- IA checking para anomalias
-- Auditoria de provisioning
-
-**Custo**: R$ 35,000
-
----
+| **ID** | RISK-009 |
+| **Categoria** | Access Management |
+| **Descrição** | Erros na provisionamento dão acesso incorreto ou acesso de menos |
+| **Probabilidade** | 🟠 MÉDIA (50%) |
+| **Impacto** | 🟠 ALTO (7/10) |
+| **Prioridade** | 🟠 P2 - ALTO |
+| **Score de Risco** | 6.5/10 |
+| **Estratégia** | **Mitigar** |
+| **Plano de Ação** | 1. Implement approval workflow 2. Validation of provisioning 3. Automated testing 4. Audit trails |
+| **Responsável** | Access Management Lead |
+| **Prazo** | 30 dias |
 
 ---
 
 ## 🟡 RISCOS MÉDIOS
 
-### RISK-013: Shadow Identities
+### RISK-010: Revogação Tardia (Late Revocation)
 
 | Campo | Valor |
 |-------|-------|
-| **Categoria** | Identity Governance |
-| **Probabilidade** | MÉDIA (0.55) |
-| **Impacto** | MÉDIO (0.65) |
-| **Prioridade** | 13 |
-
-**Descrição**: Contas paralelas/alternativas criadas para bypass de controles.
-
-**Mitigação**: Scanning automático, alertas, políticas de contas únicas.
+| **ID** | RISK-010 |
+| **Categoria** | Lifecycle |
+| **Descrição** | Acesso não é revogado rapidamente quando necessário |
+| **Probabilidade** | 🟡 MÉDIA (60%) |
+| **Impacto** | 🟡 MÉDIO (6/10) |
+| **Prioridade** | 🟡 P3 - MÉDIO |
+| **Score de Risco** | 5.4/10 |
+| **Estratégia** | **Mitigar** |
+| **Plano de Ação** | 1. Automate revocation process 2. Reduce approval cycle 3. Real-time revocation API 4. Escalation procedures |
+| **Responsável** | Operations Lead |
+| **Prazo** | 45 dias |
 
 ---
 
-### RISK-014: Falha em Auditoria Contínua
+### RISK-011: Recomendações Incorretas da IA
 
 | Campo | Valor |
 |-------|-------|
-| **Categoria** | Audit & Compliance |
-| **Probabilidade** | BAIXA (0.30) |
-| **Impacto** | CRÍTICO (0.92) |
-| **Prioridade** | 14 |
-
-**Descrição**: Trilha de auditoria incompleta, perdida ou não confiável.
+| **ID** | RISK-011 |
+| **Categoria** | AI/ML |
+| **Descrição** | LLM fornece recomendações incorretas ou prejudiciais |
+| **Probabilidade** | 🟡 MÉDIA (45%) |
+| **Impacto** | 🟡 MÉDIO (7/10) |
+| **Prioridade** | 🟡 P3 - MÉDIO |
+| **Score de Risco** | 5.6/10 |
+| **Estratégia** | **Mitigar** |
+| **Plano de Ação** | 1. Implement output validation 2. Human approval gates 3. Confidence thresholds 4. Feedback loops |
+| **Responsável** | AI Lead |
+| **Prazo:** | 30 dias |
 
 ---
 
-### RISK-015: Não Conformidade com ISO 27001
+### RISK-012: Prompt Injection Attacks
 
 | Campo | Valor |
 |-------|-------|
+| **ID** | RISK-012 |
+| **Categoria** | AI/Security |
+| **Descrição** | Attacker injeta malicious prompts para manipular LLM |
+| **Probabilidade** | 🟡 BAIXA-MÉDIA (35%) |
+| **Impacto** | 🟡 MÉDIO (7/10) |
+| **Prioridade** | 🟡 P3 - MÉDIO |
+| **Score de Risco** | 4.9/10 |
+| **Estratégia** | **Mitigar** |
+| **Plano de Ação** | 1. Input sanitization 2. Prompt escaping 3. Context boundaries 4. Output validation |
+| **Responsável** | Security Engineer |
+| **Prazo:** | 21 dias |
+
+---
+
+### RISK-013: Vazamento de Logs (Log Leakage)
+
+| Campo | Valor |
+|-------|-------|
+| **ID** | RISK-013 |
+| **Categoria** | Data Protection |
+| **Descrição** | Logs contém dados sensíveis e são expostos |
+| **Probabilidade** | 🟡 BAIXA-MÉDIA (40%) |
+| **Impacto** | 🟡 MÉDIO (6/10) |
+| **Prioridade** | 🟡 P3 - MÉDIO |
+| **Score de Risco** | 4.8/10 |
+| **Estratégia** | **Mitigar** |
+| **Plano de Ação** | 1. Log redaction rules 2. Encryption at rest 3. Access controls on logs 4. Regular audit |
+| **Responsável** | Security Operations |
+| **Prazo:** | 30 dias |
+
+---
+
+### RISK-014: Erro na Classificação de Criticidade
+
+| Campo | Valor |
+|-------|-------|
+| **ID** | RISK-014 |
+| **Categoria** | Risk Management |
+| **Descrição** | Riscos são classificados com severidade incorreta |
+| **Probabilidade** | 🟡 MÉDIA (50%) |
+| **Impacto** | 🟡 MÉDIO (5/10) |
+| **Prioridade** | 🟡 P3 - MÉDIO |
+| **Score de Risco** | 4.5/10 |
+| **Estratégia** | **Mitigar** |
+| **Plano de Ação** | 1. Define clear classification criteria 2. Automated scoring 3. Expert review gate 4. Continuous refinement |
+| **Responsável** | Risk Manager |
+| **Prazo:** | 14 dias |
+
+---
+
+### RISK-015: Acesso Administrativo Indevido
+
+| Campo | Valor |
+|-------|-------|
+| **ID** | RISK-015 |
+| **Categoria** | Access Control |
+| **Descrição** | Acesso administrative concedido sem aprovação adequada |
+| **Probabilidade** | 🟡 BAIXA-MÉDIA (35%) |
+| **Impacto** | 🟡 MÉDIO (7/10) |
+| **Prioridade** | 🟡 P3 - MÉDIO |
+| **Score de Risco** | 4.9/10 |
+| **Estratégia** | **Mitigar** |
+| **Plano de Ação** | 1. Implement approval workflow 2. Manager review required 3. Audit all admin access 4. Regular reviews |
+| **Responsável** | Access Manager |
+| **Prazo:** | 30 dias |
+
+---
+
+### RISK-016: Dependência do IdP Externo
+
+| Campo | Valor |
+|-------|-------|
+| **ID** | RISK-016 |
+| **Categoria** | Vendor Management |
+| **Descrição** | Dependência crítica de fornecedor externo (Azure AD, Okta) |
+| **Probabilidade** | 🟡 BAIXA (25%) |
+| **Impacto** | 🟡 MÉDIO (6/10) |
+| **Prioridade** | 🟡 P3 - MÉDIO |
+| **Score de Risco** | 3.8/10 |
+| **Estratégia** | **Aceitar + Mitigar** |
+| **Plano de Ação** | 1. Maintain SLA contracts 2. Have fallback IdP 3. Regular testing 4. Vendor management |
+| **Responsável** | Vendor Manager |
+| **Prazo:** | 90 dias |
+
+---
+
+### RISK-017: Falha na Auditoria (Audit Failure)
+
+| Campo | Valor |
+|-------|-------|
+| **ID** | RISK-017 |
 | **Categoria** | Compliance |
-| **Probabilidade** | BAIXA (0.25) |
-| **Impacto** | ALTO (0.88) |
-| **Prioridade** | 15 |
-
----
-
-### RISK-016: Não Conformidade com LGPD
-
-| Campo | Valor |
-|-------|-------|
-| **Categoria** | Regulatory |
-| **Probabilidade** | MÉDIA (0.50) |
-| **Impacto** | CRÍTICO (0.95) |
-| **Prioridade** | 16 |
-
-**Descrição**: Processamento de dados pessoais sem consentimento ou fora da política.
-
-**Mitigação**: Privacy impact assessment, data minimization, encryption.
-
----
-
-### RISK-017: Acesso Administrativo Indevido
-
-| Campo | Valor |
-|-------|-------|
-| **Categoria** | Administration |
-| **Probabilidade** | MÉDIA (0.50) |
-| **Impacto** | CRÍTICO (0.90) |
-| **Prioridade** | 17 |
-
----
-
-### RISK-018: Dependência Crítica do IdP
-
-| Campo | Valor |
-|-------|-------|
-| **Categoria** | Architecture |
-| **Probabilidade** | BAIXA (0.25) |
-| **Impacto** | CRÍTICO (0.98) |
-| **Prioridade** | 18 |
-
----
-
-### RISK-019: Política de Retenção Inadequada
-
-| Campo | Valor |
-|-------|-------|
-| **Categoria** | Records Management |
-| **Probabilidade** | MÉDIA (0.55) |
-| **Impacto** | MÉDIO (0.68) |
-| **Prioridade** | 19 |
+| **Descrição** | Auditoria não consegue rastrear todas as ações |
+| **Probabilidade** | 🟡 BAIXA-MÉDIA (30%) |
+| **Impacto** | 🟡 MÉDIO (6/10) |
+| **Prioridade** | 🟡 P3 - MÉDIO |
+| **Score de Risco** | 3.6/10 |
+| **Estratégia** | **Mitigar** |
+| **Plano de Ação** | 1. Implement comprehensive logging 2. Immutable audit trail 3. Real-time monitoring 4. Regular testing |
+| **Responsável** | Compliance Lead |
+| **Prazo:** | 60 dias |
 
 ---
 
 ## 🟢 RISCOS BAIXOS
 
-### RISK-020: Falta de Documentação de Políticas
+### RISK-018: Não Conformidade com ISO 27001
 
 | Campo | Valor |
 |-------|-------|
-| **Categoria** | Governance |
-| **Probabilidade** | BAIXA (0.20) |
-| **Impacto** | BAIXO (0.45) |
-| **Prioridade** | 20 |
+| **ID** | RISK-018 |
+| **Categoria** | Compliance |
+| **Descrição** | Processos não estão alinhados com ISO 27001 |
+| **Probabilidade** | 🟢 BAIXA (20%) |
+| **Impacto** | 🟢 BAIXO (4/10) |
+| **Prioridade** | 🟢 P4 - BAIXO |
+| **Score de Risco** | 2.4/10 |
+| **Estratégia** | **Mitigar** |
 
 ---
 
-### RISK-021: Comunicação Deficiente com Stakeholders
+### RISK-019: Não Conformidade com LGPD
 
 | Campo | Valor |
 |-------|-------|
-| **Categoria** | Communication |
-| **Probabilidade** | BAIXA (0.30) |
-| **Impacto** | BAIXO (0.50) |
-| **Prioridade** | 21 |
+| **ID** | RISK-019 |
+| **Categoria** | Compliance |
+| **Descrição** | Processamento de dados não segue LGPD |
+| **Probabilidade** | 🟢 BAIXA (15%) |
+| **Impacto** | 🟢 BAIXO (4/10) |
+| **Prioridade** | 🟢 P4 - BAIXO |
+| **Score de Risco** | 2.0/10 |
+| **Estratégia** | **Mitigar** |
 
 ---
 
-### RISK-022: Excesso de Privilégios em Grupos
+### RISK-020: Quebra de Trilha de Auditoria
 
 | Campo | Valor |
 |-------|-------|
-| **Categoria** | Access Control |
-| **Probabilidade** | MÉDIA (0.60) |
-| **Impacto** | MÉDIO (0.70) |
-| **Prioridade** | 22 |
+| **ID** | RISK-020 |
+| **Categoria** | Compliance |
+| **Descrição** | Trilha de auditoria tem gaps ou inconsistências |
+| **Probabilidade** | 🟢 BAIXA (25%) |
+| **Impacto** | 🟢 BAIXO (3/10) |
+| **Prioridade** | 🟢 P4 - BAIXO |
+| **Score de Risco** | 1.9/10 |
+| **Estratégia** | **Aceitar** |
 
 ---
 
-### RISK-023: Falta de Monitoramento 24/7
+## 📊 Estatísticas de Riscos
 
-| Campo | Valor |
-|-------|-------|
-| **Categoria** | Security Operations |
-| **Probabilidade** | BAIXA (0.35) |
-| **Impacto** | MÉDIO (0.75) |
-| **Prioridade** | 23 |
+\\\
+Distribuição por Severidade:
+- Crítico:  3 riscos (15%)
+- Alto:     6 riscos (30%)
+- Médio:    8 riscos (40%)
+- Baixo:    3 riscos (15%)
+
+Distribuição por Probabilidade:
+- Muito Alta (70-80%): 3 riscos
+- Alta (50-69%): 6 riscos
+- Média (30-49%): 8 riscos
+- Baixa (<30%): 3 riscos
+
+Distribuição por Estratégia:
+- Mitigar: 16 riscos (80%)
+- Aceitar: 2 riscos (10%)
+- Evitar: 2 riscos (10%)
+\\\
 
 ---
 
-## 📈 Resumo por Status
-
-| Status | Quantidade | % | Ação |
-|--------|-----------|---|------|
-| 🔴 **ATIVO** | 8 | 35% | Remediação em curso |
-| 🟠 **DETECTADO** | 3 | 13% | Aguardando aprovação |
-| 🟡 **MITIGANDO** | 7 | 30% | Controles em implementação |
-| 🟢 **PREVENTIVO** | 5 | 22% | Monitorando para evitar |
-
----
-
-## 📞 Gerenciamento de Riscos
-
-**Próxima Revisão**: 21 de Agosto de 2026  
-**Proprietário do Registro**: GRC Manager  
-**Aprovação**: CIO / CISO  
-**Frequência de Atualização**: Semanal  
-
-**Contato**:
-- governance@company.com
-- +55 (XX) XXXXX-XXXX
-
+**Versão:** 1.0.0 | **Data:** 2026-07-21 | **Status:** ACTIVE
