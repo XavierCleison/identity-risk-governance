@@ -5,7 +5,7 @@
 [![IAM](https://img.shields.io/badge/domain-IAM%20%26%20Governance-blue.svg)]()
 [![AI](https://img.shields.io/badge/AI-Generative-orange.svg)]()
 
-> Plataforma inteligente de governança de identidade corporativa com análise de riscos baseada em IA Generativa
+> Plataforma inteligente de governança de identidade corporativa com análise de riscos baseada em IA Generativa. Exercício para a Especialização do microcurso 9 Gerência de Projetos de Software Apoiada por Inteligência Artificial Generativa — Unidade III: Riscos, Comunicação e Documentação Inteligente.
 
 ## 📋 Objetivo do Projeto
 
@@ -306,7 +306,11 @@ Contribuições são bem-vindas! Veja [CONTRIBUTING.md](CONTRIBUTING.md) para di
 
 ---
 
-**Última atualização**: Julho 2026  
+## 📝 Changelog
+
+- 2026-07-21T15:54-03: Atualização do README: adicionado changelog, esclarecimentos sobre uso da IA, pequenas melhorias de formatação.
+
+**Última atualização**: 2026-07-21T15:54:16-03:00  
 **Status**: 🟢 Active  
-**Versão**: 1.0.0
+**Versão**: 1.0.1
 
