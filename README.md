@@ -5,18 +5,85 @@
 [![IAM](https://img.shields.io/badge/domain-IAM%20%26%20Governance-blue.svg)]()
 [![AI](https://img.shields.io/badge/AI-Generative-orange.svg)]()
 
-> Plataforma inteligente de governança de identidade corporativa com análise de riscos baseada em IA Generativa. Exercício para a Especialização do microcurso 9 Gerência de Projetos de Software Apoiada por Inteligência Artificial Generativa — Unidade III: Riscos, Comunicação e Documentação Inteligente.
+> Plataforma conceitual de governança de identidade corporativa com análise de riscos apoiada por IA Generativa. Repositório utilizado para exercício acadêmico de Engenharia de Requisitos com IA Generativa.
+
+## 🧠 Engenharia de Requisitos com GenAI
+
+### Objetivo da atividade
+A atividade tem como objetivo demonstrar, em um contexto realista de IAM, a aplicação de técnicas de engenharia de requisitos com apoio de inteligência artificial generativa, incluindo:
+
+- identificação de requisitos funcionais e não funcionais;
+- mapeamento de regras de negócio;
+- análise de ambiguidades e lacunas;
+- criação de casos de uso;
+- definição de critérios de aceitação;
+- rastreabilidade entre artefatos;
+- utilização crítica da IA como apoio analítico.
+
+### Contexto
+O projeto Identity Risk Governance representa uma plataforma conceitual de governança de identidades e acessos corporativos, com foco em risco relacionado a:
+
+- permissões excessivas;
+- privilege creep;
+- contas órfãs;
+- conflitos de Segregation of Duties (SoD);
+- acessos privilegiados;
+- acessos sem justificativa de negócio;
+- falhas na revisão periódica de acessos;
+- governança de identidades.
+
+### Artefatos produzidos
+A documentação final da atividade foi organizada em artefatos de requisitos, uso da IA e rastreabilidade.
+
+| Artefato | Arquivo | Objetivo |
+|---|---|---|
+| Requisitos funcionais e não funcionais | [docs/requisitos/01-requisitos.md](docs/requisitos/01-requisitos.md) | Definir requisitos e critérios de qualidade |
+| Regras de negócio | [docs/requisitos/02-regras-de-negocio.md](docs/requisitos/02-regras-de-negocio.md) | Consolidar regras do domínio IAM |
+| Ambiguidades e lacunas | [docs/requisitos/03-ambiguidades-e-lacunas.md](docs/requisitos/03-ambiguidades-e-lacunas.md) | Registrar pontos ainda dependentes de validação |
+| Casos de uso | [docs/requisitos/04-casos-de-uso.md](docs/requisitos/04-casos-de-uso.md) | Descrever interações e responsabilidades |
+| Critérios de aceitação | [docs/requisitos/05-criterios-de-aceitacao.md](docs/requisitos/05-criterios-de-aceitacao.md) | Validar comportamento esperado |
+| Rastreabilidade | [docs/requisitos/06-rastreabilidade.md](docs/requisitos/06-rastreabilidade.md) | Relacionar requisitos, regras, casos e critérios |
+| Uso da GenAI | [docs/ia/07-uso-da-genai.md](docs/ia/07-uso-da-genai.md) | Documentar o papel da IA no processo |
+| Sugestões da IA | [docs/ia/08-sugestoes-da-ia.md](docs/ia/08-sugestoes-da-ia.md) | Registrar sugestões aproveitadas, modificadas e descartadas |
+
+### Utilização da IA
+A IA foi usada como apoio à etapa de engenharia de requisitos, incluindo:
+
+- análise do contexto IAM;
+- identificação de requisitos e regras;
+- sugestão de cenários e casos de uso;
+- geração inicial de critérios de aceitação;
+- revisão de consistência e de lacunas;
+- organização documental e rastreabilidade.
+
+Toda decisão final foi submetida à análise crítica humana.
+
+### Regra de aprovação humana
+A regra fundamental do projeto foi preservada em toda a documentação:
+
+- IA identifica e recomenda;
+- Humano valida e decide;
+- Sistema registra a decisão;
+- Nenhuma alteração de acesso deve ser executada automaticamente pela IA.
+
+### Estrutura da documentação
+A documentação foi organizada em duas trilhas centrais:
+
+- [docs/requisitos](docs/requisitos) — especificação dos requisitos e regras de negócio;
+- [docs/ia](docs/ia) — documentação do uso e da crítica à IA generativa.
+
+---
 
 ## 📋 Objetivo do Projeto
 
-O **Identity Risk Governance** é uma solução de governança de identidade corporativa que utiliza Inteligência Artificial Generativa para:
+O **Identity Risk Governance** é uma solução conceitual de governança de identidade corporativa que utiliza Inteligência Artificial Generativa para:
 
-- ✅ Análise automática de usuários, grupos e perfis
-- ✅ Identificação de anomalias e concessão de privilégios inadequados
-- ✅ Geração de recomendações inteligentes de mitigação
-- ✅ Relatórios executivos automatizados
-- ✅ Conformidade com ISO 27001 e LGPD
-- ✅ Auditoria e trilha de mudanças em tempo real
+- análise de usuários, grupos e perfis;
+- identificação de riscos de identidade e acesso;
+- revisão de permissões e privilégios;
+- sinalização de privilege creep, contas órfãs e conflitos de SoD;
+- geração de recomendações de tratamento;
+- suporte à decisão humana com rastreabilidade e auditoria.
 
 ---
 
@@ -24,230 +91,102 @@ O **Identity Risk Governance** é uma solução de governança de identidade cor
 
 ### Visão Geral
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                    IDENTITY RISK GOVERNANCE              │
-└─────────────────────────────────────────────────────────┘
-        │               │                │
-        ▼               ▼                ▼
-    ┌────────┐    ┌──────────┐    ┌─────────────┐
-    │ Users  │    │  Groups  │    │ Permissions │
-    └────────┘    └──────────┘    └─────────────┘
-        │               │                │
-        └───────────────┼───────────────┘
-                        ▼
-        ┌───────────────────────────────┐
-        │    Risk Analysis Engine        │
-        │  • Privilege Creep Detection   │
-        │  • Orphan Account Finder       │
-        │  • SoD Violations              │
-        │  • Compliance Checker          │
-        └───────────────────────────────┘
-                        ▼
-        ┌───────────────────────────────┐
-        │  LLM (Generative AI)           │
-        │  • Risk Assessment             │
-        │  • Recommendations             │
-        │  • Executive Summary            │
-        └───────────────────────────────┘
-                        ▼
-        ┌───────────────────────────────┐
-        │   Executive Dashboard          │
-        │  • KPIs & Metrics              │
-        │  • Risk Heat Map               │
-        │  • Action Items                │
-        └───────────────────────────────┘
-                        ▼
-        ┌───────────────────────────────┐
-        │     Security Team              │
-        │  • Stakeholders                │
-        │  • Decision Makers             │
-        │  • CIO / CISO                  │
-        └───────────────────────────────┘
-```
-
----
-
-## 🔐 Fluxo de Autenticação
-
 ```mermaid
-sequenceDiagram
-    participant User as Usuário
-    participant IDP as Identity Provider
-    participant IAM as IAM Platform
-    participant Engine as Risk Engine
-    participant LLM as AI Engine
-    participant Dashboard as Dashboard
-    
-    User->>IDP: 1. Solicita Acesso
-    IDP->>IAM: 2. Envia Identidade
-    IAM->>Engine: 3. Valida Permissões
-    Engine->>LLM: 4. Analisa Riscos
-    LLM->>Engine: 5. Retorna Recomendações
-    Engine->>IAM: 6. Aplica Políticas
-    IAM->>IDP: 7. Concede/Nega Acesso
-    IAM->>Dashboard: 8. Registra em Auditoria
-    Dashboard->>User: 9. Notifica Resultado
+flowchart TD
+    A[Identidades] --> B[Governança IAM]
+    C[Permissões e acessos] --> B
+    D[Risk Engine] --> E[IA Generativa]
+    B --> D
+    E --> F[Recomendações]
+    F --> G[Validação humana]
+    G --> H[Registro e auditoria]
 ```
+
+### Componentes principais
+
+| Componente | Responsabilidade |
+|-----------|------------------|
+| Identity Provider | Autenticação e fontes de identidade |
+| IAM Platform | Gestão de perfis, usuários e permissões |
+| Risk Engine | Detecção de riscos e anomalias |
+| AI/LLM | Análise contextual e recomendações |
+| Audit Log | Registro de decisões e evidências |
+| Governance Team | Validação e aprovação humana |
 
 ---
 
-## 🧩 Componentes Principais
+## 🚦 Governança da IA
 
-| Componente | Responsabilidade | Tecnologia |
-|-----------|------------------|-----------|
-| **Identity Provider** | Autenticação e federação | SAML 2.0, OAuth 2.0, OpenID Connect |
-| **IAM Platform** | Provisionamento e desaprovisionamento | OpenLDAP, Active Directory, Okta |
-| **Risk Engine** | Detecção de anomalias | Python, Rules Engine |
-| **AI/LLM** | Análise inteligente e recomendações | GPT-4, Claude, Gemini |
-| **Audit Log** | Trilha de auditoria | ELK Stack, Splunk |
-| **Executive Dashboard** | Visualização de KPIs | React, D3.js, Grafana |
-| **Notification Service** | Alertas em tempo real | Event-Driven, Webhooks |
+A governança da IA no projeto foi definida da seguinte forma:
+
+- IA identifica e recomenda.
+- Humano valida e decide.
+- Sistema registra a decisão.
+
+Em outras palavras, a inteligência artificial não executa ações de acesso diretamente. Sua função é apoiar a análise, a priorização e a recomendação, enquanto a decisão final e a responsabilidade continuam com atores humanos autorizados.
 
 ---
 
-## ✨ Benefícios
-
-### 🎯 Para Segurança
-- **Detecção Proativa**: Identifica riscos antes de incidentes
-- **Conformidade Automatizada**: Auditoria contínua de políticas
-- **Trilha de Auditoria**: Registro imutável de todas as mudanças
-- **Resposta Rápida**: Automação de mitigação de riscos
-
-### 💼 Para Negócio
-- **Redução de Riscos**: 40-60% de redução em violações
-- **Conformidade**: Atendimento a ISO 27001, SOC 2, LGPD
-- **Eficiência**: Automação de análises manuais
-- **Visibilidade**: Dashboard executivo em tempo real
-
-### 👥 Para Usuários
-- **Acesso Seguro**: Validação contínua de permissões
-- **Velocidade**: Aprovação rápida de requisições legítimas
-- **Transparência**: Relatórios de acesso pessoal
-- **Suporte**: Auto-atendimento de solicitações
-
----
-
-## ⚠️ Limitações
-
-| Limitação | Descrição | Mitigação |
-|-----------|-----------|-----------|
-| **Falso Positivo** | IA pode gerar recomendações incorretas | Validação humana obrigatória |
-| **Latência** | Análise em tempo real pode ter delay | Cache e processamento assíncrono |
-| **Dependência IdP** | Sistema depende do Identity Provider | Redundância e failover |
-| **Prompt Injection** | Possível manipulação de prompts | Sanitização e validação |
-| **Vazamento de Dados** | Logs podem conter informações sensíveis | Criptografia e acesso restrito |
-
----
-
-## 🤖 Utilização da IA Generativa
-
-### Casos de Uso
-
-#### 1️⃣ Identificação de Riscos
-```
-Entrada: Dados de usuários, permissões, eventos de acesso
-Processo: Análise com LLM em contexto corporativo
-Saída: Lista de riscos priorizados com recomendações
-```
-
-#### 2️⃣ Análise Qualitativa
-```
-Entrada: Riscos identificados + Histórico
-Processo: Avaliação de impacto e probabilidade
-Saída: Risk Register atualizado com priorização
-```
-
-#### 3️⃣ Recomendações de Mitigação
-```
-Entrada: Riscos prioritários + Políticas da empresa
-Processo: Geração de planos de ação personalizados
-Saída: Estratégias (Evitar, Mitigar, Transferir, Aceitar)
-```
-
-#### 4️⃣ Relatórios Executivos
-```
-Entrada: Dados brutos + KPIs + Riscos
-Processo: Síntese inteligente para diferentes públicos
-Saída: Executive Summary, Heat Maps, Recomendações
-```
-
-### Prompts Utilizados
-
-- 📝 [identify-risks.md](prompts/identify-risks.md) - Identificação de riscos
-- 📝 [executive-summary.md](prompts/executive-summary.md) - Resumos executivos
-- 📝 [stakeholder-report.md](prompts/stakeholder-report.md) - Relatórios por stakeholder
-
----
-
-## 💻 Tecnologias Sugeridas
-
-### Backend
-```
-Framework: FastAPI / Django / Spring Boot
-Linguagem: Python / Java / Go
-Banco de Dados: PostgreSQL + Redis
-Message Queue: RabbitMQ / Kafka
-```
-
-### AI/ML
-```
-LLM: OpenAI GPT-4 / Anthropic Claude / Google Gemini
-Embeddings: OpenAI / HuggingFace
-Vector Database: Pinecone / Weaviate
-```
-
-### Frontend
-```
-Framework: React / Vue / Angular
-Gráficos: D3.js / Chart.js / Recharts
-Dashboards: Grafana / Metabase
-```
-
-### DevOps
-```
-Containerização: Docker
-Orquestração: Kubernetes
-CI/CD: GitHub Actions / GitLab CI
-Logging: ELK Stack / Splunk
-```
-
-### Segurança
-```
-Autenticação: OAuth 2.0 / OIDC
-Criptografia: TLS 1.3 + AES-256
-Vault: HashiCorp Vault
-SIEM: Splunk / ELK
-```
-
----
-
-## 📚 Documentação
+## 📚 Documentação do projeto
 
 | Documento | Descrição |
 |-----------|-----------|
-| [📋 Architecture](docs/architecture.md) | Arquitetura técnica detalhada |
-| [🎯 Executive Summary](docs/executive-summary.md) | Resumo para CIO/CISO |
-| [📢 Communication Plan](docs/communication-plan.md) | Plano de comunicação com stakeholders |
-| [🤖 AI Usage](docs/ai-usage.md) | Guia de uso de IA Generativa |
-| [⚠️ Risk Register](risks/risk-register.md) | Registro completo de riscos (20+) |
-| [📊 Risk Matrix](risks/probability-impact-matrix.md) | Matriz probabilidade x impacto |
-| [📋 Response Plan](risks/response-plan.md) | Planos de resposta baseado em PMBOK |
+| [README.md](README.md) | Visão geral do projeto e atividade acadêmica |
+| [docs/architecture.md](docs/architecture.md) | Arquitetura técnica detalhada |
+| [docs/executive-summary.md](docs/executive-summary.md) | Resumo executivo |
+| [docs/communication-plan.md](docs/communication-plan.md) | Plano de comunicação |
+| [docs/ai-usage.md](docs/ai-usage.md) | Guia de uso de IA Generativa |
+| [docs/requisitos/01-requisitos.md](docs/requisitos/01-requisitos.md) | Requisitos funcionais e não funcionais |
+| [docs/requisitos/02-regras-de-negocio.md](docs/requisitos/02-regras-de-negocio.md) | Regras de negócio |
+| [docs/requisitos/03-ambiguidades-e-lacunas.md](docs/requisitos/03-ambiguidades-e-lacunas.md) | Ambiguidades e lacunas |
+| [docs/requisitos/04-casos-de-uso.md](docs/requisitos/04-casos-de-uso.md) | Casos de uso |
+| [docs/requisitos/05-criterios-de-aceitacao.md](docs/requisitos/05-criterios-de-aceitacao.md) | Critérios de aceitação |
+| [docs/requisitos/06-rastreabilidade.md](docs/requisitos/06-rastreabilidade.md) | Matriz de rastreabilidade |
+| [docs/ia/07-uso-da-genai.md](docs/ia/07-uso-da-genai.md) | Uso da IA Generativa |
+| [docs/ia/08-sugestoes-da-ia.md](docs/ia/08-sugestoes-da-ia.md) | Sugestões da IA |
+| [risks/risk-register.md](risks/risk-register.md) | Registro de riscos |
+| [risks/probability-impact-matrix.md](risks/probability-impact-matrix.md) | Matriz de priorização |
+| [risks/response-plan.md](risks/response-plan.md) | Plano de resposta |
+| [prompts/identify-risks.md](prompts/identify-risks.md) | Prompt de identificação de riscos |
+| [prompts/executive-summary.md](prompts/executive-summary.md) | Prompt de resumo executivo |
+| [prompts/stakeholder-report.md](prompts/stakeholder-report.md) | Prompt de comunicação |
 
 ---
 
-## 🚀 Como Usar
+## 🔐 Fluxo de análise e decisão
 
-### 1. Análise Inicial
-```bash
-# Coletar dados de IAM
-# Executar Risk Engine
-# Gerar Risk Register
+```mermaid
+sequenceDiagram
+    participant IA as IA Generativa
+    participant SYS as Sistema
+    participant HUM as Humano
+    participant REG as Registro/Auditoria
+
+    IA->>SYS: Identifica risco e contexto
+    SYS->>HUM: Apresenta evidências e recomendação
+    HUM->>HUM: Valida ou rejeita a recomendação
+    HUM->>REG: Registra decisão e justificativa
+    REG-->>SYS: Atualiza histórico e rastreabilidade
 ```
 
-### 2. Análise com IA
-```bash
-# Processar dados com LLM
+---
+
+## 📜 Licença
+
+Este projeto está licenciado sob Apache 2.0. Consulte [LICENSE](LICENSE).
+
+---
+
+## 🤝 Contribuição
+
+Contribuições são bem-vindas. Consulte [CONTRIBUTING.md](CONTRIBUTING.md).
+
+---
+
+## 📝 Observação final
+
+Este repositório preserva o contexto original de IAM e de governança de riscos, mas incorpora a disciplina acadêmica de engenharia de requisitos com apoio de IA Generativa, mantendo sempre a regra de que a IA não substitui a validação e a decisão humana sobre acessos corporativos.
+
 # Gerar recomendações
 # Criar Executive Summary
 ```
