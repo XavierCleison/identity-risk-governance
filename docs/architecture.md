@@ -1,157 +1,140 @@
-﻿# 🏗️ Arquitetura Técnica - Identity Risk Governance
+﻿# 🏗️ Arquitetura Conceitual - Identity Risk Governance
 
-## 📑 Índice
-- [1. Visão Geral](#1-visão-geral)
-- [2. Componentes Principais](#2-componentes-principais)
-- [3. Fluxo de Dados](#3-fluxo-de-dados)
-- [4. Stack Tecnológico](#4-stack-tecnológico)
-- [5. Padrões & Boas Práticas](#5-padrões--boas-práticas)
-- [6. Considerações de Segurança](#6-considerações-de-segurança)
+## Objetivo
 
----
+Este documento descreve a arquitetura conceitual do projeto Identity Risk Governance como referência para a atividade acadêmica de discovery arquitetural. A intenção não é afirmar uma implementação concluída, mas manter uma visão coerente com requisitos, regras de negócio, casos de uso e lacunas documentadas.
 
-## 1. Visão Geral
+A regra central de governança permanece dominante:
 
-A arquitetura do **Identity Risk Governance** segue o padrão **layered architecture** com foco em escalabilidade, segurança e conformidade.
-
-### Arquitetura de Camadas
-
-\\\
-┌─────────────────────────────────────────────────────────────┐
-│  Presentation Layer (Dashboard, APIs, Webhooks)             │
-└─────────────────────────────────────────────────────────────┘
-                            ↓
-┌─────────────────────────────────────────────────────────────┐
-│  Application Layer (Business Logic, Workflows)              │
-└─────────────────────────────────────────────────────────────┘
-                            ↓
-┌─────────────────────────────────────────────────────────────┐
-│  Service Layer (Risk Engine, AI Orchestration)              │
-└─────────────────────────────────────────────────────────────┘
-                            ↓
-┌─────────────────────────────────────────────────────────────┐
-│  Data Layer (Databases, Cache, Event Streaming)             │
-└─────────────────────────────────────────────────────────────┘
-\\\
+- IA identifica riscos e recomenda;
+- responsável humano autorizado valida e decide;
+- sistema registra a decisão e a evidência;
+- IA não executa concessões, revogações ou alterações de acesso diretamente.
 
 ---
 
-## 2. Componentes Principais
+## 1. Visão geral
 
-### 2.1 Identity Provider (IdP)
-- Autenticação centralizada
-- SAML 2.0, OAuth 2.0, OIDC
-- Multi-factor authentication (MFA)
-- Integração com Active Directory / Azure AD
+A arquitetura conceitual do projeto organiza o funcionamento em camadas de contexto e governança:
 
-### 2.2 IAM Platform
-- Gerenciamento de perfis e permissões
-- RBAC (Role-Based Access Control)
-- ABAC (Attribute-Based Access Control)
-- Provisionamento/Desaprovisionamento
+- fonte de identidade e contexto organizacional;
+- gestão de acessos e políticas de IAM;
+- análise de risco e evidência;
+- apoio analítico com IA;
+- decisão humana e registro de auditoria;
+- apresentação e consulta para governança.
 
-### 2.3 Risk Engine
-- Detecção de anomalias
-- Privilege Creep Detection
-- Contas órfãs
-- Machine Learning for risk scoring
-
-### 2.4 AI/LLM Orchestration
-- OpenAI GPT-4 / Claude 3
-- LangChain for prompt orchestration
-- Análise contextual de riscos
-- Recomendações personalizadas
-
-### 2.5 Executive Dashboard
-- KPIs e métricas em tempo real
-- Heatmap de riscos
-- Recomendações prioritizadas
-- Conformidade regulatória
-
-### 2.6 Auditoria & Compliance
-- Event logging completo
-- Trilha de auditoria
-- Conformidade ISO 27001, LGPD, GDPR
-- Data retention policies
+A estrutura foi pensada para apoiar decisões de risco em IAM, especialmente em cenários de permissões excessivas, privilege creep, contas órfãs, conflitos de SoD, acessos privilegiados e ausência de justificativa de negócio.
 
 ---
 
-## 3. Fluxo de Dados
+## 2. Componentes principais
 
-### Fluxo de Autenticação com Análise de Risco
+### 2.1 Fontes de identidade e contexto
+- Identidades, usuários e perfis corporativos;
+- dados organizacionais e funcionais;
+- papéis, unidades, status e histórico de acesso;
+- informações de processo e de negócio que contextualizam o risco.
 
-1. Usuário submete credenciais
-2. Identity Provider valida credenciais
-3. IAM Platform recebe JWT token
-4. Risk Engine analisa contexto de acesso
-5. Machine Learning calcula risk score
-6. Se risco baixo: Permitir acesso
-7. Se risco alto: Desafio adicional (MFA)
-8. LLM realiza análise adicional
-9. Decisão final: Permitir/Negar/Desafio
-10. Eventos registrados em auditoria
+### 2.2 Governança IAM
+- catálogo de acessos e permissões;
+- representação de perfis, papéis e relacionamentos de acesso;
+- regras de governança e de segregação de responsabilidades;
+- avaliação de conformidade com políticas internas e requisitos documentados.
 
----
+### 2.3 Motor de risco
+- detecção de permissões em excesso;
+- identificação de privilege creep;
+- sinalização de contas órfãs;
+- verificação de conflitos de Segregation of Duties (SoD);
+- avaliação de acesso privilegiado e justificativa de negócio;
+- classificação contextual de risco e priorização.
 
-## 4. Stack Tecnológico
+### 2.4 Apoio analítico com IA
+- interpretação do contexto de acesso e das evidências;
+- identificação de padrões e anomalías;
+- geração de recomendações com base em evidências e contexto;
+- indicação de incerteza quando dados forem insuficientes.
 
-### Backend
-- Python 3.11+ com FastAPI
-- PostgreSQL 14+ para dados
-- Redis 7.0+ para cache
-- Celery para tasks assíncronas
+### 2.5 Decisão humana e auditoria
+- revisão formal por responsável autorizado;
+- aprovação, rejeição ou solicitação de revisão;
+- armazenamento do status da decisão, do responsável, do contexto e da justificativa;
+- histórico de recomendações, evidências e decisões para auditoria.
 
-### Frontend
-- React 18+ com TypeScript
-- Redux Toolkit para state management
-- Material-UI / Tailwind CSS
-- Recharts para visualizações
-
-### DevOps
-- Docker & Docker Compose
-- Kubernetes (opcional)
-- GitHub Actions para CI/CD
-- Terraform para IaC
-
-### AI/LLM
-- LangChain para orchestration
-- OpenAI SDK
-- Anthropic Claude SDK
-- LiteLLM para multi-provider
-
-### Segurança
-- HashiCorp Vault
-- JWT para autenticação
-- OAuth 2.0 / OIDC
-- OWASP compliance
+### 2.6 Apresentação e governança
+- painéis e relatórios para análise de risco;
+- consulta ao histórico de decisões;
+- acompanhamento de riscos e de ações de governança;
+- suporte à revisão por analistas e stakeholders.
 
 ---
 
-## 5. Padrões & Boas Práticas
+## 3. Fluxo conceitual de dados
 
-- **MVC Pattern**: Separação clara de concerns
-- **Repository Pattern**: Abstração de acesso a dados
-- **Service Layer Pattern**: Lógica de negócio isolada
-- **Chain of Responsibility**: Pipeline de validação
-- **Observer Pattern**: Notificações de eventos
+```mermaid
+flowchart LR
+    U["Identidades e perfis"] --> IAM["Governança IAM"]
+    P["Permissões e papéis"] --> IAM
+    ORG["Contexto organizacional"] --> IAM
+    IAM --> R["Risk Engine"]
+    R --> A["IA Generativa"]
+    A --> REC["Recomendação"]
+    REC --> HUM["Responsável humano"]
+    HUM --> DEC["Aprovação, rejeição ou revisão"]
+    R --> AUD["Auditoria e rastreabilidade"]
+    DEC --> AUD
+    AUD --> DASH["Dashboard e relatórios"]
+```
 
----
-
-## 6. Considerações de Segurança
-
-### Princípios
-- 🔒 Defense in Depth
-- 🔐 Least Privilege
-- 🛡️ Segregation of Duties
-- 🔄 Zero Trust Architecture
-
-### Proteções
-- Input Validation (JSON Schema)
-- SQL Injection Protection (ORM)
-- CSRF Protection
-- Rate Limiting
-- Encryption (AES-256)
+Esse fluxo preserva a lógica do projeto: as informações de identidade e de acesso alimentam a análise, a IA gera recomendações com contexto, e a decisão final continua sendo humana, registrada e rastreável.
 
 ---
 
-**Versão:** 1.0.0 | **Data:** 2026-07-21
+## 4. Decisões arquiteturais relevantes
+
+### 4.1 Conceitual, não implementado
+O projeto não provê evidência de uma implementação operacional completa. Portanto, a arquitetura deve ser tratada como referência conceitual e como base para descoberta e validação futura.
+
+### 4.2 Separação de responsabilidades
+A arquitetura respeita a separação entre:
+
+- identificação de risco;
+- recomendação analítica;
+- decisão humana; e
+- registro de evidência.
+
+Isso é essencial para manter a governança de acesso, a responsabilidade e a rastreabilidade.
+
+### 4.3 Riscos e decisões dependem de validação
+A documentação reconhece lacunas em critérios quantitativos, regras de SoD e políticas de retenção. Nessas áreas, a arquitetura deve manter o comportamento aberto à validação de usuários, compliance e governança, sem transformar hipóteses em regras aprovadas.
+
+---
+
+## 5. Considerações de segurança e privacidade
+
+- dados de identidade e acesso devem ser tratados com restrição de acesso e confidencialidade;
+- o uso de IA exige minimização de dados e proteção do conteúdo enviado ao modelo;
+- a explicabilidade e a rastreabilidade são requisitos centrais da recomendação;
+- o histórico de decisões deve preservar evidência, responsabilidade e integridade;
+- qualquer ação efetiva sobre acesso deve exigir aprovação humana autorizada.
+
+---
+
+## 6. Pendências documentadas
+
+A arquitetura conceitual ainda depende de validação para:
+
+- contratos de integração e formatos de dados;
+- critérios verificáveis de risco;
+- regras específicas de SoD por processo;
+- política de retenção e auditoria;
+- limites de uso de IA com dados sensíveis;
+- matriz de papéis e aprovações humanos;
+- critérios de aceitação e cenários de teste.
+
+Essas pendências estão registradas em [requisitos/03-ambiguidades-e-lacunas.md](requisitos/03-ambiguidades-e-lacunas.md) e em [requisitos/06-rastreabilidade.md](requisitos/06-rastreabilidade.md).
+
+---
+
+**Versão:** Conceitual | **Status:** alinhada com requisitos e lacunas documentadas

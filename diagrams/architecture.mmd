@@ -1,80 +1,55 @@
-graph TB
-    subgraph Users["User Interaction"]
-        U["User"]
-        E["Applications"]
+graph LR
+    subgraph Origins["Fonte de identidade e contexto"]
+        U["Identidades / usuários"]
+        P["Perfis, papéis e permissões"]
+        ORG["Dados organizacionais e de processo"]
     end
 
-    subgraph Identity["Identity & Authentication"]
-        IDP["Identity Provider<br/>(SAML/OAuth/OIDC)"]
-        MFA["MFA Service"]
-        AUT["Authentication Layer"]
+    subgraph IAM["Governança IAM"]
+        CMP["IAM Platform / catálogo de acessos"]
+        POL["Políticas e regras de governança"]
     end
 
-    subgraph IAM["IAM Platform"]
-        UP["User Management"]
-        RM["Role Management"]
-        PM["Permission Management"]
-        AC["Access Control"]
-    end
-
-    subgraph Risk["Risk Management"]
+    subgraph Risk["Análise de risco"]
         RE["Risk Engine"]
-        AM["Anomaly Detection"]
-        RR["Risk Register"]
+        DET["Detecção de risco"]
+        EVI["Registro de evidências"]
     end
 
-    subgraph AI["AI/LLM Analysis"]
-        LLMM["LLM Orchestration"]
-        PROMPT["Prompt Engineering"]
-        VAL["Validation Layer"]
+    subgraph AI["Apoio analítico com IA"]
+        LLM["IA Generativa"]
+        REC["Recomendações"]
     end
 
-    subgraph Storage["Data & Storage"]
-        PG["PostgreSQL"]
-        RD["Redis Cache"]
-        LOG["Audit Logs"]
+    subgraph Governance["Decisão e auditoria"]
+        HUM["Responsável humano autorizado"]
+        AUD["Histórico e auditoria"]
     end
 
-    subgraph Presentation["Presentation Layer"]
-        DASH["Dashboard"]
-        API["REST APIs"]
-        REPORT["Reports"]
+    subgraph Pres["Apresentação e governança"]
+        DASH["Dashboard e relatórios"]
     end
 
-    U -->|Login| IDP
-    IDP -->|MFA Challenge| MFA
-    MFA -->|JWT Token| AUT
-    AUT -->|Verify| UP
-    E -->|Access Request| AC
+    U --> CMP
+    P --> CMP
+    ORG --> RE
+    CMP --> RE
+    RE --> DET
+    DET --> EVI
+    EVI --> LLM
+    LLM --> REC
+    REC --> HUM
+    HUM --> AUD
+    RE --> AUD
+    CMP --> AUD
+    AUD --> DASH
+    DASH --> HUM
+    CMP --> POL
+    POL --> RE
 
-    UP -->|User Data| RE
-    RM -->|Role Data| RE
-    PM -->|Permissions| RE
-    AC -->|Events| RE
-
-    RE -->|Analyze| AM
-    AM -->|Risk Score| RR
-    RR -->|Risk Context| LLMM
-
-    LLMM -->|Generate| PROMPT
-    PROMPT -->|LLM Call| VAL
-    VAL -->|Validated Output| RE
-
-    RE -->|Store| PG
-    RE -->|Cache| RD
-    RE -->|Log Events| LOG
-
-    RR -->|Data| DASH
-    RE -->|API| API
-    PG -->|Data| REPORT
-
-    DASH -->|Dashboard| U
-    REPORT -->|Output| DASH
-    
-    style Users fill:#e1f5ff,stroke:#01579b
-    style Identity fill:#f3e5f5,stroke:#4a148c
-    style IAM fill:#e8f5e9,stroke:#1b5e20
-    style Risk fill:#fff3e0,stroke:#e65100
-    style AI fill:#fce4ec,stroke:#880e4f
-    style Storage fill:#f1f8e9,stroke:#33691e
-    style Presentation fill:#ede7f6,stroke:#311b92
+    style Origins fill:#e3f2fd,stroke:#1565c0
+    style IAM fill:#e8f5e9,stroke:#2e7d32
+    style Risk fill:#fff3e0,stroke:#ef6c00
+    style AI fill:#fce4ec,stroke:#ad1457
+    style Governance fill:#f3e5f5,stroke:#6a1b9a
+    style Pres fill:#ede7f6,stroke:#4527a0

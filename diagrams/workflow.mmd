@@ -1,69 +1,32 @@
-sequenceDiagram
-    participant User as User
-    participant IdP as Identity Provider
-    participant IAM as IAM Platform
-    participant RE as Risk Engine
-    participant LLM as LLM/AI
-    participant Dashboard as Dashboard
-    participant AuditLog as Audit Log
+flowchart TD
+    A["Analista / governança"] --> B["Coleta identidade, perfil e acessos"]
+    B --> C["Risk Engine"]
+    C --> D["Identifica permissões excessivas, contas órfãs, SoD, privilégios e revisão periódica"]
+    D --> E["IA Generativa"]
+    E --> F["Recomendação com evidências e contexto"]
+    F --> G["Responsável humano analisa recomendação"]
 
-    User->>IdP: 1. Submit Credentials
-    activate IdP
-    IdP->>IdP: Validate Credentials
-    IdP->>IAM: 2. Issue JWT Token
-    deactivate IdP
-    
-    activate IAM
-    IAM->>RE: 3. User Access Context
-    deactivate IAM
-    
-    activate RE
-    RE->>RE: 4. Check Permissions
-    RE->>RE: 5. Analyze Anomalies
-    RE->>RE: 6. Calculate Risk Score
-    
-    alt Risk Score LOW (<4)
-        RE->>IAM: 7a. Low Risk - Allow
-        activate IAM
-        IAM->>AuditLog: Log: Access Allowed
-        IAM->>IdP: Grant Access Token
-        deactivate IAM
-    else Risk Score MEDIUM (4-6)
-        RE->>LLM: 7b. Medium Risk - Analyze
-        activate LLM
-        LLM->>LLM: Context Analysis
-        LLM->>RE: Recommendation
-        deactivate LLM
-        RE->>IAM: 8. Apply Strategy
-        activate IAM
-        IAM->>IdP: Request MFA
-        deactivate IAM
-    else Risk Score HIGH (>6)
-        RE->>LLM: 7c. High Risk - Deep Analysis
-        activate LLM
-        LLM->>LLM: Full Risk Assessment
-        LLM->>RE: Escalation Recommendation
-        deactivate LLM
-        RE->>IAM: 8. Deny Access
-        activate IAM
-        IAM->>AuditLog: Log: Access Denied
-        IAM->>IdP: Deny Token
-        deactivate IAM
+    G --> H{"Decisão"}
+    H -->|Aprovar| I["Registrar aprovação e justificativa"]
+    H -->|Rejeitar| J["Registrar rejeição e motivo"]
+    H -->|Solicitar revisão| K["Reabrir a análise e complementar evidência"]
+
+    I --> L["Histórico e auditoria"]
+    J --> L
+    K --> B
+
+    E -->|Dados insuficientes| M["Indicar incerteza e não automatizar ação de acesso"]
+    M --> G
+
+    subgraph Pending["Pendências e propostas"]
+        P["Limites numéricos, gatilhos de MFA e ações automáticas ainda exigem validação"]
     end
-    
-    deactivate RE
-    
-    activate IdP
-    IdP->>User: 9. Access Decision
-    deactivate IdP
-    
-    activate Dashboard
-    Dashboard->>Dashboard: 10. Update Risk Metrics
-    Dashboard->>Dashboard: Display KPIs & Heatmap
-    deactivate Dashboard
 
-    RE->>AuditLog: 11. Final Audit Trail
-    
-    activate AuditLog
-    AuditLog->>Dashboard: 12. Compliance Report
-    deactivate AuditLog
+    G --> P
+    P --> H
+
+    style Pending fill:#fff8e1,stroke:#f9a825
+    style M fill:#fce4ec,stroke:#ad1457
+    style I fill:#e8f5e9,stroke:#2e7d32
+    style J fill:#fbe9e7,stroke:#d84315
+    style K fill:#e3f2fd,stroke:#1565c0
