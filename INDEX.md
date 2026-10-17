@@ -8,6 +8,8 @@ identity-risk-governance/
 ├─ README.md                         # 📖 Visão geral do projeto e atividade acadêmica
 │
 ├─ docs/                             # 📚 Documentação geral e de requisitos
+│  ├─ experimentos/                 # 🧪 Experimentos não oficiais
+│  │  └─ validacao-de-decisoes.md   # Validação experimental de decisões
 │  ├─ architecture.md                # 🏗️ Arquitetura técnica detalhada
 │  ├─ executive-summary.md           # 👔 Resumo para CIO/CISO
 │  ├─ communication-plan.md          # 📢 Plano de comunicação
@@ -83,6 +85,10 @@ identity-risk-governance/
 | Rastreabilidade | [docs/requisitos/06-rastreabilidade.md](docs/requisitos/06-rastreabilidade.md) |
 | Uso da IA | [docs/ia/07-uso-da-genai.md](docs/ia/07-uso-da-genai.md) |
 | Sugestões da IA | [docs/ia/08-sugestoes-da-ia.md](docs/ia/08-sugestoes-da-ia.md) |
+
+## 🧪 Experimentos
+
+- [Validação experimental de decisões de revisão](docs/experimentos/validacao-de-decisoes.md) — proposta isolada, não oficial, sem execução de alterações de acesso.
 
 ---
 
@@ -207,4 +213,3 @@ Tempo total: 35 minutos
 **Última Atualização**: Julho 21, 2026  
 **Mantido por**: Governance & Security Architecture Team  
 **Próxima Revisão**: Agosto 21, 2026
-
