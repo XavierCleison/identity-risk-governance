@@ -10,7 +10,11 @@ def validate_review_decision(
     decision: str,
     approver_id: str | None = None,
 ) -> None:
-    """Raise ValueError if a decision is unknown or lacks required approval data."""
+    """Validate decision input; raise ValueError for invalid or incomplete data.
+
+    For ``revogar``, checks only that an approver ID is non-empty; it does not
+    authenticate or authorize the approver or change access.
+    """
     if decision not in VALID_DECISIONS:
         raise ValueError("Decisão inválida. Use manter, investigar ou revogar.")
 
